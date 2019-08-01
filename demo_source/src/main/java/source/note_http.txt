@@ -1,0 +1,261 @@
+1、描述：		
+	1) 全称Hypertext Transfer Protocol，超文本传输协议
+	2) 用于规定客户端与服务端之间的传输规则，所传输的内容不局限于文本
+	3) 用于获取如HTML这样的网络资源的通讯协议
+	4) 用于客户端和服务端（client-server） 
+	5) 理论上任何可靠的传输协议都可以使用
+
+2、特性：
+	1) 简单
+    2) 可扩展
+    3) 无状态   （HTTP本质是无状态的，但可使用Cookies创建有状态的会话）
+	
+3、基于HTTP的组件系统
+	1) 客户端（user-agent）
+		任何能够为用户发起行为的工具,一般指浏览器
+	2) Web服务端
+		用于处理客户端发送请求的软件或计算机，Server只是虚拟意义上代表一个机器，并不一定是一台机器
+	3) 代理（Proxies）
+		主要作用：
+		1> 缓存（可以是公开的也可以是私有的，像浏览器的缓存）
+		2> 过滤（像反病毒扫描，家长控制...）
+		3> 负载均衡（让多个服务器服务不同的请求）
+		4> 认证（对不同资源进行权限管理）
+		5> 日志记录（允许存储历史
+	
+4、连接
+	1) 一个连接是由传输层来控制,HTTP并不需要其底层的传输层协议是面向连接的，只需要它是可靠的，或不丢失消息的（至少返回错误）
+	2) TCP可靠协议
+	3) UDP不可靠协议
+	
+5、请求	(请求行 + 请求头 + 请求体)					/*
+	POST /lyric/fcgi-bin/3g_lyric HTTP/1.1
+	Accept:*/*
+	Accept-Encoding:gzip, deflate, br
+	Accept-Language:en-US,en;q=0.8
+	Authorization:Basic WkEtMTE0MjcyNjAyMDY=
+	Connection:keep-alive
+	Content-Length:666
+	Content-Type:application/json
+	Host:zhihu-web-analytics.zhihu.com
+	Origin:http://www.zhihu.com
+	Referer:http://www.zhihu.com/question/41690822
+	User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36
+	
+	<?xml version="1.0" encoding="UTF-8">
+	<root>
+		<clientType>6</clientType>
+		<version>30101</version>
+		<uid>3173372259</uid>
+	</root>
+	注：报文体和报文头中存在空行，且是必须的
+	
+	1) 请求行：		POST /lyric/fcgi-bin/3g_lyric HTTP/1.1
+		1> 请求方式	：POST、GET、HEAD、PUT
+		2> URI		：/lyric/fcgi-bin/3g_lyric			排出host剩下的部分，即服务器本地路径
+		3> 版本号		：HTTP/1.1							主流的版本是1.1，最新的版本是2.0
+	2) 请求头
+			Accept:text/html,application/xhtm +xml,application/xml;q=0.9,image/webp,*/ *;q=0.8
+			Accept-Encoding:gzip, deflate, br
+			Accept-Language:en-US,en;q=0.8
+			Authorization:Basic WkEtMTE0MjcyNjAyMDY=
+			Connection:keep-alive
+			Content-Length:666
+			Content-Type:application/json
+			Host:zhihu-web-analytics.zhihu.com
+			Origin:http://www.zhihu.com
+			Referer:http://www.zhihu.com/question/41690822
+			User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36
+			Cache-Control: no-cache 
+		1> Accept			: 让服务端知道客户端所能接收的数据类型，如text/html,q=0.9表优先权 
+		2> Accept-Charset	: 客户端可接受的字符编码,英文浏览器的默认值是ISO-8859-1
+		3> Accept-Encoding	: 客户端可接受的编码方式，如gzip,不同于文件格式，它是为了压缩文件并加速文件传递速度。浏览器在接收响应后先解码，后检查文件格式
+		4> Accept-Language	: 客户端的语言环境，如zh-cn，en-US
+		5> Authorization	: 授权信息，通常出现在对服务器发送的WWW-Authenticate头的应答中。 
+		6> Connection		: 是否需要持久连接，“请服务端不要在发出响应后立即断开TCP连接”（keep-alive、HTTP 1.1默认进行持久连接）
+		7> Content-Length	: 请求消息正文的长度,body为空则该字段值为0。该字段一般在POST请求中才会有
+		8> Content-Type		: body中的数据类型，如application/json; charset=UTF-8
+		9> Host				: 对应网址URL中的Web名称和端口号、域名
+		10>Origin			: http://www.zhihu.com
+		11>Referer			: 父页面
+		12>User-Agent		: 客户端名称（浏览器）、客户端的软件环境
+		13>Cookie			: 该属性向服务器发送Cookie,通过cookie实现会话功能
+		14>Cache-Control	: 对响应缓存进行控制
+		15>From				：请求发送者的email地址，由一些特殊的Web客户程序使用，浏览器不会用到它
+	3) 请求体
+		<?xml version="1.0" encoding="UTF-8">
+		<root>
+			<clientType>6</clientType>
+			<version>30101</version>
+			<uid>3173372259</uid>
+		</root>
+5、响应	(状态行 + 响应头 + 响应体)
+	HTTP/1.1 200 OK
+	Date: Sat, 31 Dec 2005 23:59:59 GMT
+	Content-Type: text/html;charset=ISO-8859-1
+	Content-Length: 122
+
+	＜html＞
+	＜head＞
+	＜title＞Wrox Homepage＜/title＞
+	＜/head＞
+	＜body＞
+	＜!-- body goes here --＞
+	＜/body＞
+	＜/html＞
+	
+	1) 状态行：		HTTP/1.1 200 OK
+		1> 版本号		：HTTP/1.1
+		2> 状态码		：200
+		3> 状态代码	：OK
+		状态码：
+			1xx 	指示信息–表示请求已接收，继续处理
+			2xx 	成功–表示请求已被成功接收、理解、接受
+			3xx 	重定向–要完成请求必须进行更进一步的操作。
+			4xx 	客户端错误–请求有语法错误或请求无法实现。
+			5xx 	服务器端错误–服务器未能实现合法的请求。
+	2) 响应头
+			Server:Apache Tomcat/5.0.12
+			Date:Mon,6Oct2003 13:13:33 GMT
+			Content-Type:text/html
+			Last-Moified:Mon,6 Oct 2003 13:23:42 GMT
+			Content-Length:112
+	3) 请求体
+		<?xml version="1.0" encoding="UTF-8">
+		<root>
+			<clientType>6</clientType>
+			<version>30101</version>
+			<uid>3173372259</uid>
+		</root>	
+		
+6、HTTP版本简介
+	1) HTTP1.1之前：
+		1> 不支持持久连接。一旦服务器对客户端发出响应就立即断开TCP连接
+		2> 无请求头跟响应头
+		3> 客户端的前后请求是同步的。下一个请求必须等上一个请求从服务端拿到响应后才能发出，有点类似多线程的同步机制
+		4>
+		5>
+	2) HTTP1.1(主流版本,性能提升)
+		1> 支持持久连接。客户端通过Connection属性告知服务端不要在响应后立即释放连接。HTTP是基于TCP的，该版本中一次TCP连接可以处理多次HTTP请求
+		2> 增加请求头跟响应头
+		3> 客户端不同请求之间是异步的。下一个请求不必等到上一个请求回来后再发出，而可以连续发出请求，有点类似多线程的异步处理
+		4>
+		5>
+	3) HTTP 2.0
+		1> 向下兼容，只用于https网址
+		2>
+		3>
+		4>
+		5>
+		
+7、HTTP、Socket、TCP的区别
+	1) 协议：
+		1> http协议	：针对于客户端和服务端，对数据格式的定义，								OSI模型中处于“应用层”			
+		2> tcp协议	：针对于传输过程，仅相当于传输的工具，传送数据包，						OSI模型中处于“传输层”	
+		3> socket	：不是一个协议，对TCP和IP协议的封装，是一个调用接口（API）					OSI模型中处于“会话层”	
+	2) 连接:
+		1> http连接	：短连接(可通过不断发送保持请求维持回话)  	模型：客户端请求，服务端回应
+	    2> tcp连接	：仅作为传输数据的通道，连通前须经过三次握手，断开4次握手
+	    3> socket连接：长连接，一旦建立一直保持					模型：p2p形式，双方可随时喊话
+	3) 什么时候该用HTTP，什么时候该用socket
+		HTTP场景	  ：双方不需要时刻保持连接在线，比如客户端资源的获取、文件上传等。
+		Socket场景 ：大部分即时通讯应用(QQ、微信)、聊天室、苹果APNs等
+
+8、三次握手
+	1) 客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；
+	2) 服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；
+	3) 客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。
+	
+	注：握手过程中传送的包里不包含数据，理想状态下TCP建立后在一方主动关闭连接之前，TCP将被一直保持。断开过程需要经过“四次握手”
+		
+9、网络七层协议的通俗理解（OSI七层模式）
+	1) 应用层		： 功能：文件传输，电子邮件，文件服务，虚拟终端		协议：HTTP、TFTP、FTP、DNS、Telnet、SMTPS、NMP
+	2) 表示层		： 功能：数据格式化，代码转化，数据加密			协议：无协议
+	3) 会话层		： 功能：解除建立与其他点的						协议：无协议
+	4) 传输层		： 功能：提供端对端的接口						协议：TCP、UDP
+    5) 网络层		： 功能：为数据包选择路由						协议：IP、ICMP、OSPF、BGP、IGMP、ARP、RARP
+    6) 数据链路层	： 功能：传输有地址的帧和错误检测功能				协议：SLIP、CSLIP、PPP、MTU、ARP、RARP
+	7) 物理层		： 功能：以二进制数据形式在物理媒体上传递数据		协议：ISO2110、IEEE802、IEEE802.2
+
+10、TCP和UDP的区别
+	1) 
+	UDP，是用于发送少量数据的。我发20个包出去，一般不会丢包，所以，我不管你收到多少个。在多人互动游戏，也经常用UDP协议，因为一般都是简单的信息，而且有广播的需求。如果用TCP，效率就很低，因为它会不停地告诉主机我收到了20个包，或者我收到了18个包，再发我两个！如果同时有1万台计算机都这样做，那么用TCP反而会降低效率，还不如用UDP，主机发出去就算了，丢几个包你就卡一下，算了，下次再发包你再更新。
+	TCP协议是会绑定IP和端口的协议，下面会介绍IP协议
+
+11、传输层
+	传输层只是解决了打包的问题。但是如果我有多台计算机，怎么找到我要发的那台？或者，A要给F发信息，中间要经过B，C，D,E，但是中间还有好多节点如K.J.Z.Y。我怎么选择最佳路径？这就是路由要做的事。
+	 
+	于是，发明了网络层。即路由器，交换价那些具有寻址功能的设备所实现的功能。这一层定义的是IP地址，通过IP地址寻址。所以产生了IP协议。
+
+
+	这不是一个协议，而是一个通信模型。其实它最初是伯克利加州分校软件研究所，简称BSD发明的，主要用来一台电脑的两个进程间通信，然后把它用到了两台电脑的进程间通信。所以，可以把它简单理解为进程间通信，不是什么高级的东西。主要做的事情不就是：
+	 
+	A发包：发请求包给某个已经绑定的端口（所以我们经常会访问这样的地址182.13.15.16:1235，1235就是端口）；收到B的允许；然后正式发送；发送完了，告诉B要断开链接；收到断开允许，马上断开，然后发送已经断开信息给B。
+	 
+	B收包：绑定端口和IP；然后在这个端口监听；接收到A的请求，发允许给A，并做好接收准备，主要就是清理缓存等待接收新数据；然后正式接收；接受到断开请求，允许断开；确认断开后，继续监听其它请求。
+	 
+	可见，Socket其实就是I/O操作。Socket并不仅限于网络通信。在网络通信中，它涵盖了网络层、传输层、会话层、表示层、应用层——其实这都不需要记，因为Socket通信时候用到了IP和端口，仅这两个就表明了它用到了网络层和传输层；而且它无视多台电脑通信的系统差别，所以它涉及了表示层；一般Socket都是基于一个应用程序的，所以会涉及到会话层和应用层
+
+12、socket原理
+	1) 定义：socket(套接字)，是通信的基石，支持TCP/IP协议的网络通信的基本操作单元
+	2) 包含网络通信五种必须信息：
+		1> 连接使用的协议
+		2> 本地主机的IP地址
+		3> 本地进程的协议端口
+		4> 远地主机的IP地址
+        5> 远地进程的协议端口
+
+https://blog.csdn.net/u010256388/article/details/68491509		
+https://blog.csdn.net/melody_day/article/details/53559054	
+https://www.cnblogs.com/biyeymyhjob/archive/2012/07/28/2612910.html		
+https://blog.csdn.net/heyue_99/article/details/74689057		
+https://www.cnblogs.com/dongsheng/p/4421424.html		
+https://www.cnblogs.com/chenyang920/p/5609125.html	
+	
+	
+https://blog.csdn.net/melody_day/article/details/53559054	
+https://www.cnblogs.com/biyeymyhjob/archive/2012/07/28/2612910.html
+https://www.sogou.com/sogou?ie=utf8&query=%E8%AF%B7%E6%B1%82%E7%9A%84%E5%86%85%E5%AE%B9%E5%9C%A8%E6%8C%87&pid=AWTo5-0000
+https://www.cnblogs.com/chenyang920/p/5609125.html
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,218 @@
+1、java日志组件的类别
+	1> 中间组件：
+		1) SLF4J			：日志门面，与common类似，本身并无日志的实现，logback是其天然实现，SLF4J支持参数化
+		2) Commons Logging	:是一套Java日志接口,让应用不再依赖具体的日志工具，自动匹配日志工具，动态绑定，（简称JCL）
+	2> 日志实现组件
+		1） JUL		:自Java1.4以来的官方日志实现
+		2） LogKit	：高速日志记录工具集，可将日志存入数据库可以记录很多项内容,
+		3） Logback	:一个“可靠、通用、快速而又灵活的Java日志框架”,log4j的改良版
+		4） log4j	：apach,开源,可控制输出源，可控制日志格式
+		5） Log4j2	:log4j 1.x和logback的改进版,采用新技术（无锁异步等等）,日志的吞吐量、性能提升10倍，解决死锁bug，配置更灵活
+
+
+
+
+1、使用流程
+	1> 导入log4j-1.2.17.jar包
+	2> src下创建并设置配置文件		<log4j.properties或log4j.xml>
+	3> 代码中使用
+		private static Logger logger = Logger.getLogger(Test.class);  
+				...
+		logger.debug("This is debug message.");
+		logger.info("This is info message.");
+		logger.error("This is error message.");
+2、基本组成
+	1> 三大组件：Loggers(记录器)、Appenders (输出源)、Layouts(布局)
+	2> 记录器：用于设置日志级别：FATAL > ERROR > WARN > INFO > DEBUG  （OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL）
+	3> 输出源：日志打印位置，输出源常用类
+		1) 控制台		：org.apache.log4j.ConsoleAppender
+		2) 一般文件	：org.apache.log4j.FileAppender
+		3) 日期日志	：org.apache.log4j.DailyRollingFileAppender
+		4) 滚动日志	：org.apache.log4j.RollingFileAppender
+		5) 流式日志	：org.apache.log4j.WriterAppender			（将日志信息以流格式发送到任意指定的地方）	
+    4> 布局：格式化日志输出格式,供四种日志输出样式
+		1) HTML表格	：org.apache.log4j.HTMLLayout
+		2) 自定义布局	：org.apache.log4j.PatternLayout
+		3) 简单输出	：org.apache.log4j.SimpleLayout
+		4) 预包装输出	：org.apache.log4j.TTCCLayout
+    5> 如果在加载时设置了变量System.setProperty("WebApp", appRoot)，可在此取出来${WebApp}
+    6> log4j.jar包下载地址：http://logging.apache.org/log4j/1.2/download.html
+3、根(Logger)：	
+		log4j.rootLogger＝INFO,A1,B2,C3
+			DEBUG		=日志等级，子类日志级别必定高于root父类
+			A1,B2,C3	=引用日志输出源
+4、输出源(appender)：
+	1> 声明输出源类型：log4j.appender.info=org.apache.log4j.DailyRollingFileAppender
+		1)ConsoleAppender：控制台
+			Threshold=WARN						：指定日志信息的最低输出级别，默认为DEBUG。
+			ImmediateFlush=true					：表示所有消息都会被立即输出，设为false则不输出，默认值是true。
+			Target=System.err					：默认值是System.out
+		2)FileAppender：文件
+			Threshold=WARN						：指定日志信息的最低输出级别，默认为DEBUG。
+			ImmediateFlush=true					：表示所有消息都会被立即输出，设为false则不输出，默认值是true。
+			Append=false						：true表示消息增加到指定文件中，false则将消息覆盖指定的文件内容，默认值是true。
+			File=D:/logs/logging.log4j			：指定消息输出到logging.log4j文件中。
+		3)DailyRollingFileAppender：每天产生一个日志文件
+			Threshold=WARN						：指定日志信息的最低输出级别，默认为DEBUG。
+			ImmediateFlush=true					：表示所有消息都会被立即输出，设为false则不输出，默认值是true。
+			Append=false						：true表示消息增加到指定文件中，false则将消息覆盖指定的文件内容，默认值是true。
+			File=D:/logs/logging.log4j			：指定当前消息输出到logging.log4j文件中。
+			DatePattern='_'yyyy-MM-dd'.log'		：每月滚动一次日志文件，即每月产生一个新的日志文件
+		4)RollingFileAppender：文件大小到达指定尺寸的时候产生一个新的文件
+			Threshold=WARN						：指定日志信息的最低输出级别，默认为DEBUG。
+			ImmediateFlush=true					：表示所有消息都会被立即输出，设为false则不输出，默认值是true。
+			Append=false						：true表示消息增加到指定文件中，false则将消息覆盖指定的文件内容，默认值是true。
+			File=D:/logs/logging.log4j			：指定消息输出到logging.log4j文件中。
+			MaxFileSize=100KB					：后缀可以是KB, MB 或者GB。在日志文件到达该大小时，将会自动滚动，即将原来的内容移到logging.log4j.1文件中。
+			MaxBackupIndex=2					：指定可以产生的滚动文件的最大数，例如，设为2则可以产生logging.log4j.1、logging.log4j.2两个滚动文件和一个logging.log4j文件
+		5)org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）	
+5、输出格式(layout)：
+	1> 声明输出格式类型：log4j.appender.debug.layout=org.apache.log4j.PatternLayout
+		1)HTMLLayout：以HTML表格形式布局
+			LocationInfo=true					：输出java文件名称和行号，默认值是false。
+			Title=My Logging					：默认值是Log4J Log Messages。
+		2)PatternLayout：可以灵活地指定布局模式
+			ConversionPattern=%m%n				：设定以怎样的格式显示消息。
+			：：：格式化符号说明：：：
+				%p：输出日志信息的优先级，即DEBUG，INFO，WARN，ERROR，FATAL。
+				%d：输出日志时间点的日期或时间，默认格式为2019-06-24 15:07:17,056，也可以在其后指定格式，如：%d{yyyy/MM/dd HH:mm:ss,SSS}。
+				%r：输出自应用程序启动到输出该log信息耗费的毫秒数。
+				%t：输出产生该日志事件的线程名。
+				%l：输出日志事件的发生位置，相当于%c.%M(%F:%L)的组合，包括类全名、方法、文件名以及在代码中的行数。例如：test.TestLog4j.main(TestLog4j.java:10)。
+				%c：输出日志信息所属的类目，通常就是所在类的全名。
+				%M：输出产生日志信息的方法名。
+				%F：输出日志消息产生时所在的文件名称。
+				%L:输出代码中的行号。
+				%m:输出代码中指定的具体日志信息。
+				%n：输出一个回车换行符，Windows平台为"\r\n"，Unix平台为"\n"。
+				%x：输出和当前线程相关联的NDC(嵌套诊断环境)，尤其用到像java servlets这样的多客户多线程的应用中。
+				%%：输出一个"%"字符。
+			：：：修饰符控制文本格式：：：
+				c	  ： 指定输出category的名称，最小的长度是20，如果category的名称长度小于20的话，默认的情况下右对齐。
+				%-20c ： "-"号表示左对齐。
+				%.30c ： 指定输出category的名称，最大的长度是30，如果category的名称长度大于30的话，就会将左边多出的字符截掉，但小于30的话也不会补空格。
+				%-5p  ： [DEBUG]、[INFO ] 左对齐
+		3)SimpleLayout：包含日志信息的级别和信息字符串
+		4)TTCCLayout：包含日志产生的时间、线程、类别等等信息
+6、对个别类进行单独输出（案例）：
+	1> 代码中声明：
+		private static Log logger = LogFactory.getLog(Test.class);
+	2> log4j.properties中加入:
+		log4j.logger.cn.com.Test= DEBUG, test
+		log4j.appender.test=org.apache.log4j.FileAppender
+		log4j.appender.test.File=${myweb.root}/WEB-INF/log/test.log
+		log4j.appender.test.layout=org.apache.log4j.PatternLayout
+		log4j.appender.test.layout.ConversionPattern=%d %p [%c] - %m%n
+7、单个类对多个日志文件进行输出
+	1> 代码中声明：
+		private static Log logger1 = LogFactory.getLog("myTest1");
+		private static Log logger2 = LogFactory.getLog("myTest2");
+	2> log4j.properties中加入:
+		log4j.logger.myTest1= DEBUG, test1
+		log4j.appender.test1=org.apache.log4j.FileAppender
+			...
+		log4j.appender.test1.layout.ConversionPattern=%d %p [%c] - %m%n
+		
+		log4j.logger.myTest2= DEBUG, test2
+		log4j.appender.test2=org.apache.log4j.FileAppender
+			...
+		log4j.appender.test2.layout.ConversionPattern=%d %p [%c] - %m%n
+	3> log4j.additivity.myTest1 = false
+		myTest1打印的日志只为自己独有,root不会重复打印
+8、xml配置文件
+	1> root标签必须在输出源标签下方
+	2> 可使用过滤器对日志级别进行限定
+9、propertise配置实现根据不同日志等级进行日志输出功能	
+	1> 新建自己的Appender类，继承DailyRollingFileAppender，改写针对Threshold 的设置说明，改写isAsSevereAsThreshold方法
+		public class LogAppender extends DailyRollingFileAppender {
+			@Override
+			public boolean isAsSevereAsThreshold(Priority priority) {
+				//只判断是否相等，而不判断优先级
+				return this.getThreshold().equals(priority);
+			}
+		}
+	2> 修改log4f.properties配置
+		log4j.appender.info=com.company.LogAppender
+
+11、引用jar包
+	1> JUL	 		:jdk自带，不需额外引用包
+    2> Commons		:commons-logging.jar
+    3> log4j		：log4j-1.2.17.jar + log4j.properties
+    4> JCL+Log4J	:log4j-1.2.15.jar + log4j.properties +	commons-logging-1.1.jar 
+    5> SLF4J+log4j	：log4j-1.2.15.jar + log4j.properties + slf4j-api-1.5.11.jar + slf4j-log4j12-1.5.11.jar
+    6> SLF4J+logback:slf4j-api-1.5.11.jar + logback-core-1.2.3.jar + logback-classic-1.2.3.jar + logback.xml
+    7> Log4j2		:
+12、Commons-logging结合log4j
+	1> 基本组成：两个抽象类	Log(基本记录器)和LogFactory(负责创建Log实例)
+    2> 日志级别：FATAL > ERROR > WARN > INFO > DEBUG > TRACE
+    3> 使用流程：
+		1) 导入commons-logging-1.2.jar和log4j-1.2.17.jar
+		2) 配置log4j的配置文件
+		3) 在java类中声明common提供接口
+			private static Log log = LogFactory.getLog(CommonTest.class);
+		4) 调用log.debug("************ END ***********");	
+13、SLF4J + Logback
+	1>SLF4J	 :是简单的日志外观模式框架,抽象了各种日志工具接口
+    2>Logback：Log4j的改进版本，
+    3>Logback的特性：
+		1) Logback的配置可以是XML或Groovy代码
+		2) Logback通过JMX修改日志配置,可以从JMX控制台直接操作，无需重启应用程序
+		3) Logback的异常堆栈跟踪的信息，有助于调试 
+    4>Logback模块:
+		1) logback-core   ： 核心模块
+		2) logback-classic： 改善了log4j，且自身实现了 SLF4J API，使用Logback可以使用其他的日志实现，如原始的Log4J，java.util.logging等
+		3) logback-access ： 方便访问日志信息，如通过http的方式，可省略
+		4) logback.xml	  : 配置文件
+    5>logback.xml的标签及属性
+		1) <configuration>scan	    ：为true时，配置文件如果发生改变，将会被重新加载，默认值为true 
+		2) <configuration>scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟
+		3) <configuration>debug	 	：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false
+		4)
+		
+		
+    6>
+    7>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	

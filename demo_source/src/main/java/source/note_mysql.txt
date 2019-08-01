@@ -1,0 +1,62 @@
+1、常用命令
+	1> 登陆数据库				：mysql -h localhost -u root -p			<mysql –u root –p123456 testDB>
+	2> 查询数据库版本			：status									<select version()	不登陆查询：mysql -V>
+	3> 查询所有表				：show tables； 
+	4> 表数据结构				：desc [tablename];
+	5> 查看当前数据库			：select database()；
+	6> 查看创表sql 			：show create table table_name;
+	7> 显示当前日期			：select current_date下
+	8> 表重命名				：alter table t1 rename t2;
+	9> 动MYSQL服务 			:net start mysql 
+	10>停止MYSQL服务 			:net stop mysql
+	11>字段的拼接				：+ --> 拼接数字 、concat() --> 拼接字符
+	
+2、创建用户（执行权限后需刷新数据库，testDB数据库名）
+	1> 创建用户				：insert into mysql.user(Host,User,Password) values("localhost","test",password("1234"));			--test 密码为：1234 的用户
+	2> 修改密码				：update user set password=password(”xueok654123″) where user=’root’;
+	3> 创建数据库				：create database testDB;
+	4> 授权（某个数据库的所有权限）	：grant all privileges on testDB.* to test@localhost identified by '1234';							--privileges 权限  select  update  insert，
+	5> 移除权限				：revoke all privileges on *.* from root@”%”;
+	6> 删除用户				：Delete FROM user Where User='test' and Host='localhost';
+	7> 删除数据库				：drop database testDB;
+	8> 显示所有数据库			：show databases;
+	9> 切换数据库				：use testDB; 
+	10>刷新数据库				：flush privileges;
+	11>显示当前时间			：select now(); 
+	
+3、数据库的备份（shell执行）
+	1> 备份数据库				：mysqldump -h host -u root -p testDB >dbname_backup.sql
+    2> 恢复数据库				：mysqldump -h host -u root -p testDB <dbname_backup.sql		(恢复之前需创建对应库)
+    3> 备份数据库表结构			：mysqladmin -u root -p -d testDB > a.sql
+    4> 备份数据库数据			：mysqladmin -u root -p -t testDB > a.sql			
+    5> 备份纯文本数据			:select * from emp into outfile '/tmp/emp.txt' fields terminated by "," enclosed by '"';
+
+4、表结构的修改
+	1> 增加字段				：alter table table_name add column (字段名 字段类型); 
+	2> 删除字段				：alter table table_name drop 字段名; 
+	3> 修改字段				：alter table table_name change 旧字段名 新字段名 新字段的类型; 
+	4> 修改表名				：alter table table_name rename to new_table_name; 
+	5>添加索引				：alter table 表名 add index 索引名 (字段名1[，字段名2 …]);
+	6>添加主键索引				：alter table 表名 add primary key (字段名);
+	7>添加唯一索引				：alter table employee add unique emp_name2(cardnumber);
+	8>删除索引				：alter table 表名 drop index 索引名;
+	
+5、批量执行sql脚本（必须用户登陆，切换数据库）
+	1> 单个脚本：source /Users/robot/Downloads/sql_table.sql
+	2> 批量脚本：新建.sql文件，在该文件中添加source d:\test.sql; 
+	3> 执行日志：tee C:\study\sql\vlog.log
+
+6、网站路径：
+	1> MySQL官网：https://www.mysql.com/
+	2> MySQL下载：https://dev.mysql.com/downloads/mirrors/
+	3> MySQL文档：https://dev.mysql.com/doc/relnotes/mysql/5.5/en/
+
+7、MySQL数据库默认安装目录：		<本地安装路径：C:\Program Files\MySQL\MySQL Server 5.7>
+	bin		：mysql的可执行文件，例mysql.exe
+	include ：引用平台支持库，也叫内置库，里面包含数据库信息文件，也有像C语言，C++，PHP等编写的MySQL数据库程序支持程序
+	lib		：档案库，也叫文件库，存放MySQL一些日志文件，相关插件文件等
+	share	：存放包含错误信息及规则文件，字符设置文件等
+
+	
+	
+

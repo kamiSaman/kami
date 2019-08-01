@@ -1,0 +1,56 @@
+﻿定义：WebService是一种跨编程语言和跨操作系统平台的远程调用技术
+WebService平台的三大技术：
+	1) XML+XSD:
+		1> XML:webservice中数据传输的数据格式（WebService采用HTTP协议传输数据,采用XML格式封装数据）
+		2> XSD:定义数据类型的一条标准
+	2) SOAP：特定的HTTP消息头和XML内容格式组成SOAP(SOAP协议 = HTTP协议 + XML数据格式)
+	3) WSDL：WSDL(Web Services Description Language)就是这样一个基于XML的语言，用于描述Web Service及其函数、参数和返回值。
+webservice是个概念，不是具体的技术，就想ajax一样，有很多框架可以实现webservice，比如Axis 1.4， Axis 2， Cxf， XFire 等，每个框架都有自己依赖的jar包，可以到官方去下载
+
+服务端：
+1.公开服务：
+	AdminService				org.apache.axis.utils.Admin
+	Version						org.apache.axis.utils.Admin
+	mcc_MccMeteredAccountPort	square.ngn.stub.ops.soap.server.contregcan.Mcc_MccMeteredAccountBindImpl
+	InbndMcc001SyncSoap			square.ngn.stub.ops.soap.server.getuserinfo.InbndMcc001SyncSoapImpl
+2.开发流程
+   
+
+
+
+
+
+
+客户端：
+1、访问要素
+   1>创建服务对象：new Service();
+   2>获取呼叫对象：(Call) service.createCall();
+   3>setTargetEndpointAddress 	=    	java.net.URL("http://127.0.0.1:7002/WebServiceTest/services/HelloServices?wsdl")
+   4>setOperationName		=	new QName("http://webservice.sinosoft.com/","sayHelloToPerson")
+   5>addParameter		=	"name",org.apache.axis.Constants.XSD_STRING,javax.xml.rpc.ParameterMode.IN
+   6>setReturnType		=	org.apache.axis.Constants.XSD_STRING
+   7>调用服务：call.invoke()
+   
+
+生成客户端方法：
+1、通过wsimport（jdk自带工具）生成：（JDK1.7中的JAX-WS已经不支持rpc/encoded方式了）
+   wsimport -s C:\tmp -verbose http://localhost:7002/WebServiceTest/services/HelloServices?wsdl
+2、通过Axis2生成：
+   1>下载axis2：http://www.apache.org/dyn/closer.lua/axis/axis2/java/core/1.7.9/axis2-1.7.9-bin.zip
+   2>  wsdl2java -uri .\WSDL\CCAInjectActualBillingService.wsdl -p CCAInjectActualBillingService -o ngncca 
+       wsdl2java -uri http://localhost:7002/WebServiceTest/services/HelloServices?wsdl -p clientHelloService -o newClient  
+	 uri——服务端wsdl文件保存的位置;
+	 -p——指定了生成的Java类的包名 ;
+	 -o——指定了生成的一系列文件保存的根目录 ;
+3.通过eclipse生成：文件右键webService
+
+
+
+
+   
+   
+
+
+
+
+

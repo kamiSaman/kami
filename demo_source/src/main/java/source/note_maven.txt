@@ -1,0 +1,81 @@
+1、eclipse安装maven
+	1) 安装meeclipse插件，Help->Eclipse Marketplace搜索Maven Integration for Eclipse点击安装  (有插件可省略)
+	2) 安装maven
+		1> maven官网：http://maven.apache.org/download.cgi
+		2> 配置环境变量
+			MAVEN_HOME=C:\utils\apache-maven-3.6.1
+			PATH=%MAVEN_HOME%\bin
+	3) eclipse集成maven
+		1> windows->preferences-->maven->installations,配置maven路径
+		2> 修改maven配置文件windows->preferences-->maven->User Settings
+			Golbal Settings：所用工作空间的配置文件
+			User Settings  ：当前空间配置文件
+	4> 设置maven配置文件，修改settings.xml
+		1> 修改本地仓库地址:<localRepository>C:\utils\apache-maven-3.6.1\mvn_repository</localRepository>
+		2> 访问仓库地址：
+			<mirror>
+				<id>alimaven</id>
+				<name>aliyun maven</name>
+				<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+				<mirrorOf>central</mirrorOf>
+			</mirror>
+
+2、常用地址
+	1) 索引地址：
+		http://mvnrepository.com/ 
+		http://search.maven.org/
+		https://www.mvnjar.com/
+	2) 仓库地址：	
+		https://www.mvnjar.com/org.apache.logging.log4j/log4j/2.11.2/detail.html
+		http://mvnrepository.com/
+		http://search.maven.org/
+		http://repository.sonatype.org/content/groups/public/
+		http://people.apache.org/repo/m2-snapshot-repository/
+		http://people.apache.org/repo/m2-incubating-repository/
+
+		https://repo1.maven.org/maven2/ 
+		https://repository.jboss.org/maven2/ 
+		https://repository.sonatype.org/content/groups/public/ 
+		http://maven.aliyun.com/nexus/content/groups/public 
+		http://repo.springsource.org/libs-milestone-local
+
+		
+		
+		
+		<repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+		
+		
+		<repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+	
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

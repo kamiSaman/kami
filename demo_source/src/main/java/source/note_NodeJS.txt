@@ -1,0 +1,110 @@
+1.Node.js
+	1>下载：https://nodejs.org/ja/download/releases/     自带npm包管理和分发工具
+	2>定义：
+		1)Node.js不是JS应用、而是JS运行平台。Node.js采用C++语言编写而成，是一个Javascript的运行环境。
+		2)Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。
+		3)Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。
+		4)Node.js 的包管理器 npm，是全球最大的开源库生态系统。
+	3>特点：
+		1)事件驱动
+		2)异步编程
+		3)高性能
+		4)支持的编程语言是Javascript（动态语言）
+	4>采用了包管理机制，可通过require() 函数引用其他工具模块	
+	5>事件驱动的编程模型:
+		1)传统编程模型:是前一行代码执行后下一行代码执行;
+		2)事件驱动是前一行代码正在执行时可以执行其他代码，前一行代码执行完毕通过事件调用其后代码
+2.nodejs组成部分：
+	1> v8 engine:虚拟机的功能，执行js代码;提供C++函数接口，为nodejs提供v8初始化
+	2> libuv:基于事件驱动的异步IO模型库，我们的js代码发出请求，最终由libuv完成，而我们所设置的回调函数则是在libuv触发 
+	3> builtin modules:它是由C++代码写成各类模块，包含了crypto，zlib, file stream etc 基础功能
+	4> native modules:它是由js写成，提供我们应用程序调用的库，同时这些模块又依赖builtin modules来获取相应的服务支持
+	5> 其他辅助服务
+3.npm包管理工具
+	1>常用命令：
+		1)npm install gulp -g 			//安装全局gulp模块（-g <==> -global）
+        2)npm install gulp    			//安装gulp模块
+        3)npm install gulp@3.9.1		//安装3.9.1版本的gulp模块
+        4)npm install gulp -S			//安装模块将添加到生产依赖中（-S <==> -save）
+		5)npm install gulp -D			//安装模块将添加到开发依赖中（-D <==> –save-dev）
+		6)npm install all				//根据package.json中的依赖安装其他模块
+		7)npm ls [-g]					//查看[全局]安装的模块
+		8)npm uninstall gulp			//卸载模块
+		9)npm update gulp				//更新模块
+	   10)npm init						//项目中快死生成package.json文件
+	   11)npm help <command>			//查看某条命令的详细帮助
+	   12)npm root  	[-g]			//查看包的安装路径
+	   13)npm start 	[<args>]  		//启动模块
+	   14)npm stop  	[<args>]		//启动模块
+	   15)npm restart   [<args>]		//重启模块
+		
+		
+		
+		
+		
+Nodejs学习路线图
+　　	从零开始nodejs系列文章:http://blog.fens.me/series-nodejs/
+	项目管理：npm,grunt, bower, yeoman
+	Web开发：express,ejs,hexo, socket.io, restify, cleaver, stylus, browserify,cheerio
+	工具包：underscore,moment,connet,later,log4js,passport,passport(oAuth),domain,require,reap,
+	commander,retry
+	数据库：mysql,mongoose,redis
+	异步：async,wind
+	部署：forever,pm2
+	测试：jasmine,karma
+	跨平台：rio,tty
+	内核：cluster,http,request
+	算法：ape-algorithm(快速排序),ape-algorithm(桶排序)
+
+	Node.js采用了Google Chrome浏览器的V8引擎
+	通过事件注册、异步函数，开发人员可以提高资源的利用率，性能也会改善。
+	Node.js的异步编程风格
+	Chrome V8 引擎
+	Javascript的匿名函数和闭包
+	Ecmascript
+	nodejs是单线程，但是它的非阻塞式编程，使得它非常高效
+	观察者设计模式
+
+
+
+实事案例：结合gulp工具搭建环境步骤
+	1>安装Node.js（v8.11.4），https://nodejs.org/ja/download/releases/
+	2>将dev20190509.zip解压后dev文件放到node.js安装目录下。
+	3>将gulpfile.js文件放入dev平行目录下。
+	4>启动Node.js命令行模式，进入dev平行目录下，确认node和npm是否安装成功。
+	  确认命令：node -v、npm -v。
+	5>安装全局gulp 				：npm install gulp@3.9.0 -g
+	  安装本地gulp 				：npm install gulp@3.9.0
+	  查看gulp是否安装成功			：gulp -v
+	6>初始化package.json文件		：npm init 
+	7>安装插件包
+		启动Node.js命令行模式,进入dev平行目录下，执行命令：
+		npm install --save-dev gulp
+		npm install --save-dev gulp-rename
+		npm install --save-dev gulp-webserver 
+		npm install --save-dev gulp-concat 
+		npm install --save-dev gulp-uglify 
+		npm install --save-dev gulp-jshint jshint
+		npm install --svae-dev jshint-stylish
+		npm install --save-dev run-sequence 
+		npm install --save-dev del 
+		npm install --save-dev gulp-replace 
+		npm install --save-dev gulp-stylus 
+		npm install --save-dev gulp-autoprefixer 
+		npm install --save-dev gulp-cssmin 
+		npm install --save-dev gulp-strip-debug
+		npm install --save-dev minimist
+	8>打开dev/node_modules/gulp-webserver/src/index.js修改162行：
+		app.use(config.path, serveStatic(file.path));  ====>   app.use(config.path, serveStatic(file.path,{'index':['index.htm']})); 
+	9>cd /dev/src/js/env/,若存在__env.js文件 修改env.js			
+	10>将env.js文件内env.JSON_PATH对应值修改为本地路径
+		env.JSON_PATH = '/data/json';   ====>    env.JSON_PATH = '/dev/data/json';
+	11> cd /dev;
+		gulp;
+	12>访问首页地址
+		http://localhost:8000/dev/
+		http://localhost:8000/dev/index.htm
+
+
+
+

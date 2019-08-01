@@ -1,0 +1,80 @@
+https://www.cnblogs.com/xuanhun/archive/2012/06/23/2559607.html
+
+■通信アルゴリズムリスト修正
+　・NGN回収代行 WEBサーバミドルウェア設定ファイル仕様書.xlsx
+http://httpd.apache.org/docs/2.4/zh-cn/ssl/ssl_howto.html
+http://httpd.apache.org/docs/2.2/mod/mod_ssl.html
+http://httpd.apache.org/docs/2.4/zh-cn/mod/mod_ssl.html#sslciphersuite
+
+https://docs.oracle.com/en/java/javase/index.html
+https://docs.oracle.com/javase/8/docs/
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html
+https://docs.oracle.com/en/java/javase/12/docs/specs/security/standard-names.html#jsse-cipher-suite-names
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#SupportedCipherSuites
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html
+
+https://docs.oracle.com/javase/8/docs/jre/api/net/httpserver/spec/com/sun/net/httpserver/HttpsParameters.html#setCipherSuites-java.lang.String:A-getCipherSuites
+https://ask.csdn.net/questions/189433
+
+
+https://blog.csdn.net/yuanxiaoyongok/article/details/78053052
+https://www.cnblogs.com/xuanhun/archive/2012/06/23/2559607.html
+
+
+# vim /usr/local/apache/conf/httpd.conf
+### overwrite the following parameters ###
+Include conf/extra/httpd-ssl.conf
+SSLCertificateFile /etc/pki/tls/certs/server.crt
+SSLCertificateKeyFile /etc/pki/tls/private/server.key
+
+
+1.現状の暗号アルゴリズムリストを最新の推奨設定と比較し、最適な設定となるように検討する。
+  将现状的加密算法列表与最新的推荐设定进行比较，讨论成为最佳的设定。
+  
+2.WEBサーバにおいて、apacheの「ssl.conf」のSSLCipherSuiteへの指定変更を行う。アプリ側においても「ngn-web.properties」の「prov.ssl.ciphersuites」への指定変更を行う。
+  暗号スイートの推奨設定についてはNTT東西様よりご提示頂き設定変更する対処を行う。
+  WEBサーバにおいて、apacheの「ssl.conf」のSSLCipherSuiteへの指定変更を行う。アプリ側においても「ngn-web.properties」の「prov.ssl.ciphersuites」への指定変更を行う。
+  暗号スイートの推奨設定についてはNTT東西様よりご提示頂き設定変更する対処を行う。
+
+  在WEB服务器中，进行对apache的「ssl.conf」的SSLCipherSuite的指定变更。在应用方面，也进行向「ngn-web.properties」的「prov.ssl.ciphersuites」的指定变更。
+  关于密码套件的推荐设定从NTT东西先生提示进行设定变更的处理。  
+
+
+1.◎Apache設定ファイル（WEBサーバ：ssl.conf）
+  ◎Apache设定文件（WEB服务器：ssl.conf）
+	#   SSL Cipher Suite:
+	# List the ciphers that the client is permitted to negotiate.
+	# See the mod_ssl documentation for a complete list.
+	SSLCipherSuite ALL:!aNULL:!RC2:!MD5:!DES:!IDEA:!ADH:!RC4:!KRB5:!3DES:!DSS:!PSK:!SEED
+2.◎Javaアプリ設定ファイル（WEBサーバ：ngn-web.properties）
+	prov.ssl.ciphersuites=TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,\
+	TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,\
+	TLS_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,\
+	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA
+3.上記の設定内容について最新の推奨設定に変更する対処を行う。
+  对上述的设定内容进行变更为最新的推荐设定的应对。
+
+
+前提条件】
+关于加密套件的设定内容被联合的设定。
+
+【对应内容】
+将现状的加密算法列表与最新的推荐设定进行比较，讨论成为最佳的设定。
+・Apache设定
+更新ssl.conf「SSLCipherSuite」的加密套餐的设定内容。
+·java应用程序设定
+更新ngn-web.properties「prov.ssl.ciphersuites」的加密套餐的设定内容。
+
+·动作校验
+服务器动作确认：设定变更浏览器的加密套件设定，进行SSL通信能否进行验证。
+客户端动作确认：假设变更伪运营商服务器的加密套件，验证是否能够进行SSL通信。
+
+【补充】
+虽然修正规模不大，但是对于伴随本修正的影响机能进行验证。
+
+
+
+
+

@@ -1,0 +1,41 @@
+1、不同操作系统查看进程号：
+	1> linux：
+		1) 查看tomcat进程号： ps –ef | grep tomcat
+		2) 关闭tomcat进程： kill -9 进程号
+	2> windows：
+		1) 查看tomcat进程号：netstat -ano | findstr 8080
+		2) taskkill /f /pid 进程号
+2、window常用命令
+	1> 创建file文件		 	echo .111>file.log
+	2> 
+	3> 
+	4> 
+	5> 
+	6> 
+3、lixnu常用命令
+	chmod 777 name -R				赋权限
+	source ./.profile				使.profile立即生效
+	
+4、查看环境变量	
+	1) windows
+		1> 查看全部环境变量		 	set
+		2> 查看特定环境变量			set path
+		3> 查看所有P开头的环境变量	set p
+		4> 设置环境变量			set aa=7
+		5> 删除环境变量			set aa=
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		

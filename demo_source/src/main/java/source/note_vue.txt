@@ -1,0 +1,130 @@
+vue
+1、特点：
+	1>易用（使用成本低），灵活（生态系统完善，适用于任何规模的项目），高效（体积小，优化好，性能好）
+	2>Vue是一个MVVM的js框架，Vue 的核心库只关注视图层，开发者关注的只是m-v的映射关系
+	3>数据流是单向的，数据流行更清晰
+	4>Vue中的指令只是操作dom的，用组件来分离结构逻辑
+	5>有开发版本和生产版本，开发版本没有压缩的，并且有很多提示，而生产版本全部删掉了
+	6>在Vue中提供了一个命令行工具,可以帮我们快速的搭建基于webpack的开发环境
+	7>缺点：Vue不支持IE8，因为使用了ES5的很多特性
+
+2、Vue.js下载地址:	https://vuejs.org/js/vue.min.js
+	
+	
+3、v-on 有几个好处：	
+	1>扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
+	2>因为你无须在 JavaScript 里手动绑定事件，你的 ViewModel 代码可以是非常纯粹的逻辑，和 DOM 完全解耦，更易于测试。
+	3>当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何自己清理它们。	
+	
+4、Vue中单向数据流与双向绑定两者的区别：
+	1>单向流：父组件向子组件传递数据。父组件数据修改	，子组件随之修改；若子组件修改，父组件不会修改
+	2>双向绑定：view与model之间的双向绑定，一方修改另一方也会随之修改 
+
+
+5、gulp搭建vue项目			
+	1>安装vue命令行工具：npm install vue-cli -g
+	2>验证是否成功：vue -V
+	3>进入项目目录初始化：npm init 					
+	4>vue周边的库 vue-cli , vue-router , vue-resource , vuex
+		1)使用vue-cli创建项目（命令行工具）				npm install vue-cli -g		
+		2)使用vue-router实现单页路由				npm install vue-router -D
+		3)用vuex管理我们的数据流					npm install vue-vuex -D
+		4)使用vue-resource请求我们的node服务端		npm install vue-resource -D
+		5)使用.vue文件进行组件化的开发
+
+6、webpack搭建vue项目
+	1>安装node.js运行平台，自带命令行工具：npm			（可用淘宝的镜像及其命令cnpm代替：npm install cnpm -g）
+	2>安装vue									npm install vue
+	3>封装了webpack的vue项目模板及命令行工具			npm install -g vue-cli
+	4>创建基于webpack模板的新项目					vue init webpack my-project
+	5>进入项目目录									cd my-project
+	6>安装项目所需插件								npm install
+    7>运行项目									npm run dev
+7、目录结构
+	1> build					项目构建(webpack)相关代码
+	2> config					配置目录，包括端口号等
+	3> node_modules				npm加载的项目依赖模块
+	4> src						开发的目录
+	5> static					静态资源目录，如图片、字体等
+	6> test						初始测试目录，可删除
+	7> .xxx文件					这些是一些配置文件，包括语法配置，git配置等
+	8> index.html				首页入口文件，你可以添加一些 meta 信息或统计代码啥的
+	9> package.json				项目配置文件
+	10>README.md				项目的说明文档，markdown 格式
+	11>/src/assets				放置一些图片，如logo等
+	12>/src/components			目录里面放了一个案例组件文件，可以不用
+	13>/src/App.vue				项目入口文件，我们也可以直接将组件写这里，而不使用 components 目录
+	14>/src/main.js				项目的核心文件
+	15>
+	16>
+	17>
+	18>
+	19>
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+8、使用vue实例：
+	1>下载vue.js包后引入
+		<script src=vue.js />
+	2>创建展示页面，id="app"用于绑定vue实例，msg为vue实例中对象名称
+		<div id="app">{{msg}}</div>		//展示的HTML
+	3>创建vue实例，固定格式
+		new Vue({
+			el: '#app',   				//通过id嵌入元素，el是元素element的缩写
+			data: { 
+				msg: 'Holle Word!'
+			},
+			methods: {					//方法
+				details: function() {	
+					return  this.site + " - 学的不仅是技术，更是梦想！";
+				}
+			}
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/build/webpack.dev.conf.js：开发环境下的webpack的配置；
+/build/webpack.prod.conf.js：生产环境下的webpack的配置；
+/build/build.js： 编译时的入口文件，当执行npm run build时其实就是执行node build/build.js（在package.json中）
+/build/check-versions.js： 编译代码时执行的确认node和npm版本的文件，如果版本不符，则停止编译
+/build/utils.js：这个文件有两个作用，一是作为vue-loader的配置来使用；另一个是用来给开发环境和生产环境配置loader
+/build/vue-loader.conf.js：vue-loader的配置，用在webpack.base.conf.js中
+/build/webpack.base.conf.js：vue-cli基础webpack配置，通过与webpack.dev.conf.js和webpack.prod.conf.js两个配置文件的合并来实现“不重复原则,不会在不同的环境中配置相同的代码

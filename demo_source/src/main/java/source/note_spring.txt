@@ -1,0 +1,25 @@
+<context:component-scan base-package="com.spring" />		自??描
+@Autowired		自?装配		Resource（name="".type=""）
+@Qualifier("bmwCar")	引用具体??bean
+@Service		??引用?
+@Scope			默?是"singleton"即?例，"prototype"表示原型即?次都会new一个新的出来。	
+
+@Configuration把一个?作?一个IoC容器，它的某个方法?上如果注册了@Bean，就会作??个Spring容器中的Bean。
+@Scope注解 作用域
+@Lazy(true) 表示延?初始化
+@Service用于?注????件、 
+@Controller用于?注控制??件（如struts中的action）
+@Repository用于?注数据???件，即DAO?件。
+@Component泛指?件，当?件不好??的?候，我?可以使用?个注解?行?注。
+@Scope用于指定scope作用域的（用在?上）
+@PostConstruct用于指定初始化方法（用在方法上）
+@PreDestory用于指定??方法（用在方法上）
+@DependsOn：定?Bean初始化及???的?序
+@Primary：自?装配?当出?多个Bean候?者?，被注解?@Primary的Bean将作?首?者，否?将抛出?常
+@Autowired 默?按?型装配，如果我?想使用按名称装配，可以?合@Qualifier注解一起使用。如下：
+@Autowired @Qualifier("personDaoBean") 存在多个?例配合使用
+@Resource默?按名称装配，当找不到与名称匹配的bean才会按?型装配。
+@PostConstruct 初始化注解
+@PreDestroy 摧?注解 默? ?例  ??就加?
+@Async??方法?用
+

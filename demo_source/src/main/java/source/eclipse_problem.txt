@@ -1,0 +1,49 @@
+ 1、***修改eclipse 代码提示级别
+	1> 单个项目修改
+		项目上右键-->properties-->java compiler-->building-->enable project specific setting-->build path problems
+			-->选中abort   Incomplete build path/Circular dependencies  这两个选项修改为Warning
+	2> 整个环境修改
+		window->preferences->java->compiler->building->build path problems 
+			-->选中abort   Incomplete build path/Circular dependencies  这两个选项修改为Warning
+ 2、语言转换
+	1> 关掉eclipse,找到eclipse的快捷键
+	2> 右键--属性，在"目标"一栏原来文本的后面添加" -nl en_US"
+	3> 通过快捷方式重新启动（若不成功查看语言 包是否存在）
+	###区域语言代码###
+		zh		中文（zh_CN）
+		ja		日文（ja_JP）
+		en		英文（en_US 美国）
+ 3、An error occurred while filtering resources
+	1> 右键项目Maven -> update project
+	2> 如果解决不了，重新导入该项目，让eclipse重新编译
+ 4、
+ 5、
+ 6、
+ 7、
+ 8、
+ 9、
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34

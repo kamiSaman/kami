@@ -1,0 +1,768 @@
+1、基础元素
+	1> 标题：<h1>
+    2> 段落：<p>
+    3> 链接：<a>				<a href="http://www.w3school.com.cn">This is a link</a>		style="text-decoration:none"  取消下划线
+    4> 图像：<img>			<img src="w3school.jpg" width="104" height="142" />
+	5> 文档类型:<!DOCTYPE> 		
+	6> <noscript>:元素用来定义在脚本未被执行时的替代内容（文本
+
+2、引用外部文件
+	1>引用样式表：<link rel="stylesheet" type="text/css" href="/html/csstest1.css" >
+	2>锚的链接：
+		   创建：a name="tips">基本的注意事项 - 有用的提示</a>
+		   引用：a href="#tips">有用的提示</a>		<a href="http://www.w3school.com.cn/html/html_links.asp#tips">有用的提示</a>
+	3>ｊｓ的引用：	script src="myScript1.js" />
+	
+	
+3、全局对象
+	1>全局属性:
+		Infinity				代表正的无穷大的数值
+		java					代表 java.* 包层级的一个 JavaPackage
+		NaN						指示某个值是不是数字值
+		Packages				根JavaPackage对象
+		undefined				指示未定义的值
+	2>全局函数：
+		decodeURI()				解码某个编码的URI
+		decodeURIComponent()	解码一个编码的URI组件
+		encodeURI()				把字符串编码为URI
+		encodeURIComponent()	把字符串编码为URI组件
+		escape()				对字符串进行编码
+		eval()					计算JavaScript字符串，并把它作为脚本代码来执行
+		getClass()				返回一个JavaObject的JavaClass
+		isFinite()				检查某个值是否为有穷大的数
+		isNaN()					检查某个值是否是数字
+		Number()				把对象的值转换为数字
+		parseFloat()			解析一个字符串并返回一个浮点数
+		parseInt()				解析一个字符串并返回一个整数
+		String()				把对象的值转换为字符串
+		unescape()				对由escape()编码的字符串进行解码
+	
+	
+4、事件
+	1>单击
+		onclick 			单击按钮时
+		ondblclick 			双击文本时
+		onsubmit 			当用户点击提交按钮
+		onreset 			当用户点击重置按钮	
+	2>输入
+		onfocus 			当输入字段获得焦点时
+		onblur 				当输入字段失去焦点时
+		onselect 			当输入文本被选取时
+		onchange			HTML 元素已被改变,当input捕获到焦点，系统储存当前值，失去焦点比较当前值与存储值，false触发事件
+		onkeydown			当用户按下/按住某个键时
+		onkeypress 			当用户按下/按住某个键时
+		onkeyup 			当用户释放按键时
+	3>鼠标
+		onmouseout 			当鼠标离开一个元素时
+		onmouseover			当鼠标进入一个元素时
+		onmousemover		移动鼠标触发
+		onmousedown 		当按下鼠标时：提示点击了哪个元素
+		onmouseup			当点击鼠标时：提示点击了哪个按钮
+	5>加载
+		onload				浏览器已经完成页面加载后，页面显示前
+		onerror				当图像加载时发生错误
+		onunload 			当浏览器关闭文档时
+		onresize 			当浏览器窗口大小被调整时
+	6>event对象：
+		1>代表事件状态，如事件发生的元素，键盘状态，鼠标位置和鼠标按钮状态一旦事件发生,便会生成Event对象，如单击一个按钮，浏览器的内存中就产生相应的 event对象
+		2>event对象只在事件发生的过程中才有效
+		3>event的某些属性只对特定的事件有意义。比如，fromElement 和 toElement 属性只对 onmouseover 和 onmouseout 事件有意义
+		4>元素坐标：event.clientX		event.clientY
+		5>屏幕坐标：event.screenX		event.screenY
+
+
+5、String的方法和属性
+	1>string属性
+		int = str.length
+		obj = str.constructor 			返回对象的引用类型
+	2>string方法	
+		int = str.indexOf(str1)			返回字符串中指定文本首次出现的索引，未找到返回“-1”;   可设置第二个参数，即（str,2）从第二个支付开始查
+		int = str.lastIndexOf(str1)		返回最后一次
+		int	= str.search(str1)			搜索特定值的字符串，可查询正则表达式
+		str	= str.slice(start, end)		(7,10)截取 7<=x<10； 	（7）截取7之后所有字段；		可以为负，从后到前   	
+		str	= str.substring(start, end) 无法接受负的索引
+		str	= str.substr(start, length)	第二个参数规定被提取部分的长度
+		str	= str.replace(str1,str2) 	替换；默认只替换首个匹配；全部替换，正则，str.replace(/Microsoft/g, "W3School");
+		str	= str.toUpperCase()			换为大写
+		str	= str.toLowerCase() 		换为小写
+		str	= str.concat()				拼接
+		str	= str.trim() 				删除字符串两端的空白符
+		str	= str.charAt(1)				提取字符串字符
+		str	= str.tcharCodeAt(1)		提取字符 unicode 编码
+		str	= str.split(",")			字符串转换为数组
+		str	= str.link()				将字符串显示为链接
+		str	= str.match(regexp)			找到一个或多个正则表达式的匹配
+		str	= str.strike()				使用删除线来显示字符串
+		str	= str.valueOf()				返回某个字符串对象的原始值
+	
+	
+6、正则：
+	var patt = /e/;
+	patt.test("The best things in life are free!");   //返回true或false
+
+	
+7、Number 方法和属性	(数字属性不可用于变量)
+	1>实行	
+		int.prototype					使您有能力向对象添加属性和方法
+		int.MAX_VALUE					返回 JavaScript 中可能的最大数
+		int.MIN_VALUE					返回 JavaScript 中可能的最小数
+		int.NEGATIVE_INFINITY			表示负的无穷大（溢出返回）
+		int.NaN							表示非数字值（"Not-a-Number"）
+		int.POSITIVE_INFINITY			表示无穷大（溢出返回）
+	2>方法	
+		str = int.toString()
+		str = int.toExponential()		返回被四舍五入并使用指数计数法的数字字符串值  x.toExponential(2);     // 返回 9.66e+0
+		str = int.toFixed()				var x = 9.656.toFixed(0);		// 返回 10
+		str = int.toPrecision()			var x = 9.656.toPrecision(6);	// 返回 9.65600
+		str = int.valueOf()
+	3>转换	
+		变量转化为数字
+		Number(a) 						x = true;	Number(x);        // 返回 1  		；Number(new Date("2019-04-15"));    // 返回 1506729600000
+		parseInt(str) 
+		parseFloat(str) 
+	4>数字工具函数
+		Math.round(x) 						四舍五入
+		Math.pow(x, y)						x的y次幂  ==>  x**y=5**2=25=Math.pow(5, 2)
+		Math.sqrt(x) 						x的平方根
+		Math.abs(x)							绝对值
+		Math.ceil(x)						向上求整
+		Math.floor(x)						向下求整
+		Math.min(1,3,5,-3)					列表中最小值，同max()
+		Math.random()						0<=x<1的随机数
+		Math.floor(Math.random() * 11);		返回 0 至 10 之间的数
+		Math.floor(Math.random()*(x-y))+x;  x与y之间的随机数
+		y = 123e5;      					科学计数法：12300000
+	
+8、数组
+	1>创建数组
+		var cars=["Saab","Vo", "BMW"]
+		var cars={f"Jo", l:"Do", age:46}
+		cars.length
+	2>数组函数
+		cars.push("Lemon");             							向结尾添加一个新元素 (Lemon)，返回新的长度
+		cars.unshift("Lemon") 										在开头向数组添加新元素，返回新的长度
+		cars.pop()													删除最后一个元素,返回删除的值
+		cars.shift()												删除首个数组元素，返回删除的值
+		cars.join("*")												Banana * Orange * Apple * Mango
+		cars.plice(2, 2, "Le", "Ki")								向数组添加新项			
+		fruits.slice(1, 3)											截取数组生成新数组
+		cars.concat(cars2，cars3) 									合并现有数组来创建一个新数组
+		cars.indexOf(str)											返回元素下标
+		cars[cars.length - 1]										访问最后一个数组元素
+		cars[cars.length]="Lemon"	  								向 fruits 添加一个新元素 (Lemon)
+		Array.isArray(cars);     									是否是数组,返回 true(fruits instanceof Array)
+		cars.reverse()												反转数组
+		cars.sort(); 												对数组进行排序，字符串排序
+		points.sort(function(a, b){return a - b});					对数组进行排序，数字排序，升序
+		points.sort(function(a, b){return b - a});					对数组进行排序，数字排序，降序
+		points.sort(function(a, b){return 0.5 - Math.random()}); 	以随机顺序排序数组
+		cars.sort(function(a, b){return a.year - b.year});			排序对象数组
+		Math.max.apply([1, 2, 3])									找数组中的最高值
+		numbers.find(myFunction);									返回通过测试函数的第一个数组元素的值
+		numbers.findIndex(myFunction)								返回通过测试函数的第一个数组元素的索引
+		numbers.forEach(myFunction);								遍历数组，myFunction为回调函数myFunction(value, index, array)
+		numbers.map(myFunction);									遍历数组，myFunction为回调函数myFunction(value, index, array),返回新数组，原数据不会修改
+		numbers.filter(myFunction);									创建一个包含通过测试的数组元素的新数组
+		numbers.every(myFunction)									检查所有数组值是否通过测试
+		numbers.every(myFunction)									检查某些数组值是否通过了测试
+		numbers.reduce(myFunction);									myFunction(total, value, index, array)，返回初始值，total为初始值（reduce：升序	reduceRight：降序）
+	注：数据处理小数时：尽量×100处理后再除以100，对精确度要求高的数据禁止在js中处理
+	
+	
+9、日期
+	1>创建日期的方法：
+		new Date()
+		new Date(year, month, day, hours, minutes, seconds, milliseconds)
+		new Date(milliseconds)
+		new Date(date string)
+	2>时间对象的方法
+		getDate()				以数值返回天（1-31）
+		getDay()				以数值获取周名（0-6）
+		getFullYear()			获取四位的年（yyyy）
+		getHours()				获取小时（0-23）
+		getMilliseconds()		获取毫秒（0-999）
+		getMinutes()			获取分（0-59）
+		getMonth()				获取月（0-11）
+		getSeconds()			获取秒（0-59）
+		getTime()				获取时间（从 1970 年 1 月 1 日至今）
+		Date.mow();				静态方法，返回从1970年以来的毫秒数
+	3>格式化
+		var time1 = new Date().format("yyyy-MM-dd HH:mm:ss");   
+		var time2 = new Date().format("yyyy-MM-dd"); 
+	
+	
+10、JSON
+	1>定义：存储和传输数据的格式
+	2>常用方法：
+		var obj = JSON.parse(text)				字符串转换为JavaScript 对象
+		var str = JSON.stringify(obj)			JavaScript对象转换为字符串
+
+	
+11、表单
+	1>input必须有name才可以被form提交
+	2>html5新加元素<datalist>，录入提示框
+	3>input的属性：
+		value		:值
+		readonly	:只读	
+		disabled	:不可修改
+		size		:录入框长度	
+		maxlength 	:可录入长度
+	
+	
+12、对象
+	pension.launge =  "English"；		添加属性
+	delete person.age;					删除属性
+	get/set lang(){...}					对象中可通过get/set方法，是方法能通过访问属性的方式访问，如pension.lang
+
+
+13、函数
+	1>方法中参数是值传递，对象是引用传递
+	2>类别
+		a>函数声明		：用function关键字声明一个函数，再指定一个函数名
+		b>函数表达式	 	：用function关键字声明一个函数，但未给函数命名，并将匿名函数赋予一个变量
+		c>匿名函数		：用function关键字声明一个函数，但未给函数命名 							匿名函数属于函数表达式
+	3>函数声明和函数表达式不同
+		a>声明函数的调用可在任意位置,函数表达式调用必须在函数表达式之后
+		b>声明函数不可作为自调函数，函数表达式可以
+	4>自执行函数：
+		构造：（函数表达式（））  或 （函数表达式）（）
+	5>闭包：
+		a> 前提：js中镶嵌函数表达式，内部函数表达式可访问外部函数表达式作用域中的变量
+		b> 特性：外层函数表达式是自调函数，return是内层函数表达式，访问外部函数实际是通过内部函数表达式外部函数的变量，调用完毕外层函数内存空间长期存在，内层函数内存空间自动回收
+		c> 好处：避免全局变量的污染，私有成员的存在
+		d> 用途：	a：避免全局变量的污染 b：使用闭包对数据进行缓存
+	6>带()调用函数名，访问函数处理逻辑；		不带()调用函数名，访问函数自身代码字符串
+14、DOM
+	1> 定义：文档对象模型（Document Object Model），是关于如何获取、更改、添加或删除 HTML 元素的标准
+	2> 特点： 
+		HTML DOM 方法是能够（在 HTML 元素上）执行的动作
+		HTML DOM 属性是能够设置或改变的 HTML 元素的值
+		在 DOM 中，所有 HTML 元素都被定义为对象
+	3>查找 HTML 元素
+		document.getElementById(id)					通过元素 id 来查找元素
+		document.getElementsByTagName(name)			通过标签名来查找元素
+		document.getElementsByClassName(name)		通过类名来查找元素
+		document.querySelectorAll("p.intro")		通过 CSS 选择器查找 HTML 元素
+		document.forms["frm1"]						通过 HTML 对象选择器查找 HTML 对象
+		var x = document.getElementById("main");	
+		var y = x.getElementsByTagName("p"); 		双重查询：	id为"main"的所有"p"
+	4>改变 HTML 元素
+		element.innerHTML = value					改变元素的 innerHTML
+		element.attribute = value					改变 HTML 元素的属性值
+		element.setAttribute(attribute, value)		改变 HTML 元素的属性值
+		element.style.color = "blue";				改变 HTML 元素的样式
+		element.style.visibility = "hidden";		改变 HTML 元素的样式（hidden：隐藏；visible：显示）
+	5>添加和删除元素
+		document.createElement(element)				创建HTML元素
+		document.removeChild(element)				删除HTML元素
+		document.appendChild(element)				添加HTML元素
+		document.replaceChild(element)				替换HTML元素
+		document.write(text)						写入HTML输出流,文档完全加载后使用document.write()会覆盖已有的HTML
+	6>添加事件处理程序
+		onclick										点击事件
+		onload										加载事件
+		onunload									离开事件
+		onchange 									改变事件，当input捕获到焦点，系统储存当前值，失去焦点比较当前值与存储值，false触发事件
+		onfocus										获取焦点事件
+		element.onclick = function(){code}			向元素的onclick属性添加逻辑处理程序
+		element.addEventListener(event,func,useCap)	事件监听器，保持原来事件的同时添加新的事件，useCap:可选，布尔值默认false，多层嵌套事件时（冒泡：小到大；捕捉：大到小）
+		element.removeEventListener(event,func)		移除原有事件监听器	
+	7>节点之间导航
+		parentNode
+		childNodes[nodenumber]
+		firstChild
+		lastChild
+		nextSibling
+		previousSibling
+		element.innerHTML   ==   element.firstChild.nodeValue   ==   element.childNodes[0].nodeValue
+	8>节点属性
+		nodeName	：元素节点 = 标签名； 		属性节点 = 属性名称； 	文本节点 = #text； 	文档节点 = #document
+		nodeValue	:元素节点 = undefined; 	属性节点 = 属性值; 	文本节点 = 文本文本
+		nodeType	:属性节点 = 节点的类型		nodeType是只读的。 
+	9>添加和删除节点（HTML 元素）
+		parent.appendChild(node)				追加子节点
+		element.insertBefore(node, child)		在某个子函数前追加子节点
+		parent.removeChild(child)				删除子节点
+		parent.replaceChild(para, child)		替换子节点
+	10>DOM集合
+		1)document.getElementsByTagName()		返回			HTMLCollection对象 
+		  document.querySelectorAll("p")		返回			NodeList对象
+		2)HTMLCollection 可以通过索引访问成员，但并非数组，因为无法使用数组的对外方法，如valueOf()、pop()、push()
+		3)区别：HTMLCollection与NodeList只是叫法不同。HTMLCollection是HTML元素的集合，NodeList 是文档节点的集合，元素是统称，节点具有唯一性用于选定
+		4)例：
+			var x = document.getElementsByTagName("p");
+			y = x[0];
+15、BOM(浏览器对象模型,Browser Object Model)
+	1>window对象的属性	
+		window.document					document 对象，文档节点
+		window.screen					screen 对象，包含用户屏幕的信息
+		window.innerHeight				浏览器窗口的内高度（以像素计）
+		window.innerWidth				浏览器窗口的内宽度（以像素计）
+	2>window对象的方法	
+		window.open() 					打开新窗口
+		window.close()					关闭当前窗口
+		window.moveTo()					移动当前窗口
+		window.resizeTo() 				重新调整当前窗口
+		window.onerror()				页面错误触发事件
+	3>screen对象	
+		screenscreen.width				访问者屏幕宽度
+		screen.height					访问者屏幕高度
+		screen.availWidth				访问者屏幕的有效宽度，以像素计，减去诸如窗口工具条之类的界面特征
+		screen.availHeight				访问者屏幕的有效高度
+		screen.colorDepth				色深，颜色的比特数
+		screen.pixelDepth				像素深度
+	4>Location对象	
+		location.href 					返回当前页面的 href (URL)
+		location.hostname 				返回 web 主机的域名
+		location.pathname 				返回当前页面的路径或文件名
+		location.protocol 				返回使用的 web 协议（http: 或 https:）
+	5>history对象	
+		history.length					返回浏览器历史列表中的 URL 数量
+		history.back()					等同于在浏览器点击后退按钮
+		history.forward()				等同于在浏览器中点击前进按钮
+		history.go(3/-3)				加载 history 列表中的某个具体页面
+	6>navigator对象	
+		navigator.appName				返回浏览器的名称
+		navigator.appVersion			返回浏览器的平台和版本信息
+		navigator.browserLanguage		返回当前浏览器的语言
+		navigator.cookieEnabled			返回指明浏览器中是否启用 cookie 的布尔值
+		navigator.cpuClass				返回浏览器系统的 CPU 等级
+		navigator.onLine				返回指明系统是否处于脱机模式的布尔值
+		navigator.platform				返回运行浏览器的操作系统平台
+	7>弹出框	
+		alert（"str"）						警告框	
+		confirm("str")					确认框
+		prompt("info","str"				提示框
+	8>定时事件	
+		setTimeout(func, ms)			n秒后执行函数
+		setInterval(func, ms)			n秒后执行函数，持续执行
+		clearTimeout(to)				停止setTimeout事件的func
+		clearInterval(in)				停止setInterval事件的func
+	9>Cookies对象（格式：document.cookie = "username=Steve Jobs; expires=Sun, 31 Dec 2017 12:00:00 UTC; path=/";）		
+		document.cookie = "str"			创建cookie (expires:有效时间；path：/，对应路径，默认当前页面生效)	
+		document.cookie					读取cookie
+		cookie="username=;expires=""	删除 cookie,不指定cookie值,把 expires 参数设置为过去的日期
+16>AJAX	
+	1>定义：是一种从网页访问 Web 服务器的技术，代表异步 JavaScript 和 XML
+	2>步骤：
+		1>网页中发生一个事件（页面加载、按钮点击）
+		2>由 JavaScript 创建 XMLHttpRequest 对象
+		3>XMLHttpRequest 对象向 web 服务器发送请求
+		4>服务器处理该请求
+		5>服务器将响应发送回网页
+		6>由 JavaScript 读取响应
+		7>由 JavaScript 执行正确的动作（比如更新页面）
+	2>XMLHttpRequest对象 					(IE5和IE6使用ActiveX对象:new ActiveXObject("Microsoft.XMLHTTP"))
+		1)属性
+			onreadystatechange			定义readyState发生变化时被调用的函数
+			readyState					保存XMLHttpRequest的状态		(0：请求未初始化;1：服务器连接已建立;2：请求已收到;3：正在处理请求;4：请求已完成且响应已就绪)
+			responseText				以字符串返回响应数据
+			responseXML					以 XML 数据返回响应数据
+			status						返回请求的状态号	(200: "OK";403: "Forbidden";404: "Not Found")
+			statusText					返回状态文本（比如 "OK" 或 "Not Found"
+		2)方法
+			abort()						取消当前请求
+			getAllResponseHeaders()		返回头部信息
+			getResponseHeader()			返回特定的头部信息
+			open()						规定请求
+			send()						将请求发送到服务器，用于 GET 请求
+			send(string)				将请求发送到服务器，用于 POST 请求
+			setRequestHeader()			向要发送的报头添加标签/值对
+		3)open()方法参数，open(method,url,async,user,psw)
+			method：请求类型GET或POST
+			url：文件位置
+			async：true（异步）或false（同步）
+			user：可选的用户名称
+			pwd：可选的密码
+17、Json
+	1>定义：JavaScript 对象标记法（avaScript Object Notation），一种轻量级的数据交换格式，JSON 使用 JavaScript 语法，但是 JSON 格式是纯文本的
+	2>格式转化
+		JSON.stringify(myObj)				对象转换为JSON格式				
+		var myObj =  JSON.parse(myJSON)		JSON格式转化为对象
+	3>JSON和Xml的区别
+		1>XML必须使用XML解析器进行解析JSON可通过标准的JavaScript函数进行解析
+		2>JSON不使用标签,JSON 更短
+		3>JSON 的读写速度更快
+		4>JSON 可使用数组
+	4>数据格式
+		1)字符串必须用双引号包围
+		2)数字必须是整数或浮点数
+		3)值可以是对象、数组、Boolean、null
+	5>增加删除json属性	
+18、JSONP （JSON with Padding）
+	1>定义：一种无需考虑跨域问题即可传送 JSON 数据的方法
+	2>作用：解决跨域无法传送json数据问题
+	3>请求方式：<script src="demo_jsonp.php">
+19、jQuery 	
+	1> 作用： 处理浏览器不兼容性并简化 HTML DOM操作、事件处理、动画和 Ajax
+	2> 引入： <script type="text/javascript" src="jquery.js" />   		注：位于页面的 <head> 部分，下载地址：http://jquery.com/download/
+	3> 文档就绪函数
+		$(document).ready(function(){
+			--- jQuery functions go here ----
+		});
+	4> 元素选取
+		1) $("#id")					id选择器
+		2) $(".class")				类选择器
+		3) $("p")					标签选择器
+		4) $("p#demo")				组合选择器
+	5>属性选择器	
+		1) $("[href]")				所有带有 href 属性的元素
+		2) $("[href='#']") 			所有带有 href 值等于 "#" 的元素
+		3) $("[href!='#']") 			所有带有 href 值不等于 "#" 的元素
+		4) $("[href$='.jpg']") 		所有 href 值以 ".jpg" 结尾的元素
+	6>其他选择器	
+		1) $(this)					当前 HTML 元素
+		2) $("p:first")				第一个 <p> 元素
+		3) $("p:last")				最后一个 <p> 元素
+		4) $("tr:even")				所有偶数 <tr> 元素
+		5) $("tr:odd")				所有奇数 <tr> 元素
+		6) $("ul li:eq(3)")			列表中的第四个元素（index 从 0 开始）
+		7) $("ul li:gt(3)")			列出 index 大于 3 的元素
+		8) $("ul li:lt(3)")			列出 index 小于 3 的元素
+		9) $("input:not(:empty)")	所有不为空的 input 元素	
+		11)$(":selected")			所有被选取的 input 元素
+		12)$(":checked")			所有被选中的 input 元素
+	7>事件函数
+		1)模板
+			$(document).ready(function(){
+				$("button").click(function(){  //代码   });
+			});
+		2)名称冲突
+			var jq=jQuery.noConflict()   			为避免$符号与其他库冲突，可用jq来代替 $ 符号（$.noConflict();  ==>  $=jQuery）
+		3)jQuery 事件
+			$(document).ready(function)					文档加载完毕  （将函数绑定到文档的就绪事件）
+	        $(selector).load(function)					指定的元素（及子元素）已加载时，会发生 load() 事件
+			$(selector).bind({func1,func2})				绑定多个事件，（不包括）
+			$(selector).live({func1,func2})　				绑定多个事件，所选元素包括新生成的子元素
+			$(selector).one({func1,func2})　				绑定多个事件，每个元素只能执行一次事件
+			$(selector).die(event,function)				删除live生成的处理逻辑
+			$(selector).click(function)					点击
+			$(selector).dblclick(function)				双击
+			$(selector).focus(function)					输入域获得焦点
+			$(selector).blur(function)					输入域失去焦点
+			$(selector).change(function)					输入域内容改变
+			$(selector).keydown()						按键按下触发
+			$(selector).keydown()						按键松开触发
+			$(selector).keypress()						按键按下触发，每次
+			$(selector).error()							error触发事件
+	        $(selector).mouseover(function)				鼠标进入元素触发
+			$(selector).mouseout (function)				鼠标离开元素触发
+	        $(selector).mouseenter(function)				鼠标进入元素触发，包括子元素
+			$(selector).mouseleave(function)				鼠标离开元素触发，包括子元素
+	        $(selector).mousedown(function)				鼠标按下触发，不需要松开
+			$(selector).mouseup(function)				鼠标松开触发			
+	        $(selector).mousemove()						鼠标移动触发
+	        $(selector).select()				 			input 元素中的文本被选择时触发
+			$(selector).toggle(func1(),func2())  		多次点击同一按钮，循环实现不同功能。toggle()默认绑定有hide()和show()
+			$(selector).trigger(event,[param1,p])		激活元素绑定事件
+	8>特效和动画											参数可选(speed:执行速度，"slow"、"fast" 或毫秒，callFunc：回调函数)
+		1)隐藏显示
+			$(selector).hide(speed,callFunc)				隐藏				
+			$(selector).show(speed,callFunc)				显示
+			$(selector).toggle(speed,callFunc)				功能循环
+		2)淡入淡出
+			$(selector)fadeIn(speed,callFunc)				淡入	
+			$(selector)fadeOut(speed,callFunc)				淡出
+			$(selector)fadeToggle(speed,callFunc)			功能循环
+			$(selector)fadeTo(speed,opacity,callFunc)		设置透明度opacity： 0 与 1 
+		3)滑动	
+			$(selector).slideDown(speed,callback);			向上滑动
+			$(selector).slideUp(speed,callback);			向下滑动
+			$(selector).slideToggle()						功能循环
+		4)自制动画
+			$(selector).animate({params},speed,callback);	创建自定义动画
+		5)停止动画
+			$(selector).stop(stopAll,goToEnd);				stopAll：移除所有动画；goToEnd：是否立即完成动画
+		6)方法链接
+			$("#p1").css("color","red").slideUp(2000);		多个方法按顺序执行，"p1" 元素首先会变为红色，然后向上滑动
+	9>对DOM的操作	
+		1)获得文本:text()、html() 以及 val() 					设置文本：text("aaaaaaaaaaa") 		设置回调函数：text(finc（）)
+		2)获取属性:attr("href")								设置属性：attr("href","aaaaa")		置回调函数：attr("href",finc（）)
+		3)添加元素
+			$("p").append("Some appended text.")			在被选元素的结尾插入内容
+		    $("p").prepend("Some prepended text.")			在被选元素的开头插入内容
+			$("img").after("Some text after")				在被选元素之后插入内容
+			$("img").before("Some text before")				在被选元素之前插入内容
+		4)删除元素
+			$("#div1").remove()								删除被选元素及其子元素
+			$("#div1").empty()								删除被选元素及其子元素
+			$("p").remove(.italic)							删除p标签中class为italic的元素
+		5)通过对类的操纵修改css样式
+			$("#div1").addClass("important blue")			选元素添加一个或多个类
+			$("h1,h2,p").removeClass("blue")				从被选元素删除一个或多个类
+			$("h1,h2,p").toggleClass("blue")				对被选元素进行添加/删除类的切换操作
+			$("p").css("background-color")					获取元素css
+			$("p").css("background-color","yellow")			修改元素css
+			
+			css样式：
+			.important{
+				font-weight:bold;
+				font-size:xx-large;
+			}
+			.blue{
+				color:blue;
+			}
+	    6)遍历DOM节点
+			a>祖先元素：
+				$("span").parent()							返回直接父元素
+				$("span").parents() 						返回所有祖先元素
+				$("span").parents("ul") 					返回所有祖先元素,且它是 <ul> 元素
+				$("span").parentsUntil("div")				返回所有祖先元素,且介于span和div之间
+			b>后代元素：
+				$("div").children()							返回被选元素的所有直接子元素
+				$("div").children("p.1")					返回被选元素的所有直接子元素.且标签为,且类名为1
+				$("div").find()								返回被选元素的后代元素，一路向下直到最后一个后代
+				$("div").find("span")						返回被选元素的后代元素，一路向下直到最后一个后代，且span的标签
+			c>同胞元素：
+				$("h2").siblings()							返回元素的所有同胞元素，不包括该元素
+				$("h2").next()								返回下一个同胞元素
+				$("h2").nextAll()							返回所有跟随的同胞元素
+				$("h2").nextUntil("h6")						返回<h2> 与 <h6> 元素之间的所有同胞元素
+				prev(), prevAll() 以及 prevUntil() 			方法的工作方式与上面的方法类似，只不过方向相反而已
+			d>过滤元素	
+				$("div p").first()							返回第一个元素	
+				$("div p").last()							返回最后一个元素
+				$("p").eq(1)								返回索引是1的元素，索引从0开始
+				$("p").filter(".intro")						返回带有类名 "intro" 的所有 <p> 元素	
+				$("p").not(".intro")						返回不带有类名 "intro" 的所有 <p> 元素	
+	10>AJAX			
+		1)$(selector).load(URL,data,callback)				通过load从服务器加载数据，并把返回的数据放入被选元素中
+		2)$.get(URL,callback)								通过 HTTP GET 请求从服务器上请求数据
+		3)$.post(URL,data,callback)							通过 HTTP POST 请求从服务器上请求数据	
+		
+		实例：
+		get方式：
+			$("button").click(function(){
+				$.get("demo_test.asp",function(data,status){
+					alert("Data: " + data + "\nStatus: " + status);
+				});
+			});
+		post方式：
+			$("button").click(function(){
+				$.post("demo_test_post.asp",
+				{
+					name:"Donald Duck",
+					city:"Duckburg"
+				},
+				function(data,status){
+					alert("Data: " + data + "\nStatus: " + status);
+				});
+			});
+	
+	11>jQuery与javaScript常用方法的对比
+		1) id选择器			：element 	= $("#id01") 				= document.getElementById("id01");
+		2) 标签名选择器		：elements 	= $("p") 	 				= document.getElementsByTagName("p")
+		3) 类名选择器			：elements 	= $(".intro")				= document.getElementsByClassName("intro")
+		4) CSS 选择器		:elements 	= $("p.intro")				= document.querySelectorAll("p.intro")
+		5) 获取文本			：text 		= element.text()			= element.textContent	 = element.innerText
+		6) 获取html元素		:content 	= element.html()			= element.innerHTML
+		7) 获取父元素			:myParent 	= element.parent()			= element.parentNode
+		8) 文本修改			：element.text("Hello China!")			= element.textContent = "Hello China!";
+		9) html修改			：element.html("<p>Hello World</p>")		= element.innerHTML = "<p>Hello World</p>"
+		10)隐藏html元素		：element.hide()							= element.style.display = "none"
+		11)显示html元素		：element.show()							= element.style.display = ""
+		12)样式化html元素	：element.css("font-size","35px")		  	= element.style.fontSize = "35px"
+		13)删除元素			：element.remove()  						= element.parentNode.removeChild(element)
+	
+	
+案例：
+	1>数据类型
+		获取对象或数据类型：
+		1)类型返回值
+			var length = 7;                             	// 数字 	number
+			var lastName = "Gates";                      	// 字符串	string
+			var flag = true;								// 布尔		boolean
+			var cars = ["Porsche", "Volvo", "BMW"];         // 数组		object
+			var x = {										// 对象		object
+					firstName:"Bill", 
+					lastName:"Gates",
+					fullName : function() {					// 函数		function
+						return this.firstName + " " 
+							+ this.lastName;
+					}
+			};  
+		2)数据类型(5)：字符串（string）、数字（number）、布尔（boolean）、对象（object）、函数（function）
+		3)对象类型(3)：对象（Object）  、日期（Date）  、数组（Array）
+		4)空值      ：null         、undefined
+	2>Undefined 与 null 的值相等，但类型不相等：
+		typeof undefined              // undefined
+		typeof null                   // object
+		null === undefined            // false
+		null ==  undefined            // true
+		myArray.constructor === Array
+	3>转义字符
+		\b	退格键
+		\f	换页
+		\n	新行
+		\r	回车
+		\t	水平制表符
+		\v	垂直制表符	
+	4>数字的参数：Infinity
+		Infinity 			数字超出最大可能数范围时返回的值，除以 0（零）也会生成 Infinity
+		NaN					数不是合法数
+		typeof Infinity 	返回 number
+		typeof NaN 			返回 number 	
+	5>遍历对象的属性(For/In):
+		for (x in person) { 
+			text += person[x];
+		}	
+	6>为对象添加属性
+		a> 为string对象添加trim方法					
+			String.prototype.trim = function (){
+				return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+			};		
+	7>闭包案例
+		1)返回私有变量
+			var add = (function () {
+				var counter = 0;
+				return function () {return counter += 1;}
+			})();
+			add();add();add();
+		2)封装私有变量
+			var person = function(){    
+				//变量作用域为函数内部，外部无法访问    
+				var name = "default";       
+				   
+				return {    
+				   getName : function(){    
+					   return name;    
+				   },    
+				   setName : function(newName){    
+					   name = newName;    
+				   }    
+				}    
+			}();    
+			alert(person.name);//直接访问，结果为undefined    
+			alert(person.getName());    
+			person.setName("zhangsan");    
+			alert(person.getName()); 
+		3)闭包在java中的实现可以通过单例设计模式实现同样效果。
+			
+		
+·	8> 添加节点
+		<div id="div1">
+			<p id="p1">这是一个段落</p>
+			<p id="p2">这是另一个段落</p>
+		</div>
+
+		<script>
+			var para = document.createElement("p");
+			var node = document.createTextNode("这是新文本");
+			para.appendChild(node);
+ 
+			var element = document.getElementById("div1");
+			element.appendChild(para);
+		</script>
+		
+		
+		删除节点
+		var child = document.getElementById("p1");
+		child.parentNode.removeChild(child);
+	9>Cookie实例
+		a>设置cookie
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays*24*60*60*1000));
+				var expires = "expires="+ d.toUTCString();
+				document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
+		b>获取cookie
+			function getCookie(cname) {
+				var name = cname + "=";
+				var decodedCookie = decodeURIComponent(document.cookie);
+				var ca = decodedCookie.split(';');
+				for(var i = 0; i <ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+					 }
+					 if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			} 
+		c>检测 cookie 的函数
+			function checkCookie() {
+				var username = getCookie("username");
+				if (username != "") {
+					alert("Welcome again " + username);
+				} else {
+					username = prompt("Please enter your name:", "");
+					if (username != "" && username != null) {
+						setCookie("username", username, 365);
+					}
+				}
+			} 
+	10>ajax
+		loadDoc("url-1", myFunction1);
+		loadDoc("url-2", myFunction2);
+
+		function loadDoc(url, cFunction) {
+			var xhttp;
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				  cFunction(this);
+				}
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
+		}
+
+		function myFunction1(xhttp) {
+			// action goes here
+		} 
+		function myFunction2(xhttp) {
+			// action goes here
+		} 
+	11>(in-for)遍历数组 
+		for (i in myObj.cars) {
+			x  += myObj.cars[i];
+		}	
+	12>JSONP案例
+		1:Server端PHP文件：
+			<?php
+				$myJSON = '{ "name":"Bill Gates", "age":62, "city":"Seattle" }';
+				 
+				echo "myFunc(".$myJSON.");";
+			?>
+		2:客户端文件：
+			<script src="/demo/demo_php_jsonp.php"></script>
+			<script>
+				function myFunc(myObj) {
+				  document.getElementById("demo").innerHTML = myObj.name;
+				}
+			</script>
+	13>页面错误触发事件
+		onerror = handleErr;
+		var txt = "";
+		function handleErr(msg, url, l) {
+			txt = "此页面出错。\n\n";
+			txt += "错误：" + msg + "\n";
+			txt += "URL：" + url + "\n";
+			txt += "Line：" + l + "\n\n";
+			txt += "单击“确定”以继续。\n\n";
+			alert(txt);
+			return true;
+		}	
+
+		1）message：一个字符串，声明了出现的错误的信息(不同的浏览器中返回的消息内容略有差异)
+		2）url：一个字符串，声明了出现错误的文档的URL
+		3）line：一个数字，声明了出现错误的代码行的行号 
+	16>
+	17>
+	18>
+	19>			
+	20>
+	21>
+			
+
+			
+			
+			
+
+
+
+
+		

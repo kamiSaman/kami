@@ -1,0 +1,293 @@
+gulp
+1.简介：一个由javaScript编写的一种工作流的前端工具，用于构建流式开发，Gulp是一个基于Node.JS和npm构建的任务运行器,
+2.作用：
+	1>js的合并
+	2>css的压缩
+	3>图片的压缩
+	4>以及js的压缩
+	5>给静态资源添加md5
+	6>合并雪碧图
+	7>自动刷新浏览器
+3.组成
+	1>gulp.task('default', ["watch", "dev"]);		默认任务入口:
+	2>gulp.task()	生成任务
+	3>gulp.src()	读取文件流
+	4>gulp.dest()	写入文件流
+	5>gulp.watch()	文件监听
+	6>.pipe()		流的处理
+4.目录组成
+	1>gulpfile.js			//gulp的入口配置文件
+	2>node_modules			//本地依赖模块
+	3>package.json			//定义项目依赖模块和项目配置
+	4>实际项目
+5.在gulpfile.js中引用依赖功能组件
+	var gulp = require('gulp'), 					// Load plugins 必须先引入gulp插件
+	var webserver = require('gulp-webserver'),		//开启服务器 
+	var rename = require('gulp-rename'), 			//重命名 
+	var uglify = require('gulp-uglify'), 			//压缩js
+	var jshint = require('gulp-jshint'),			//js语法校验 
+	var runSequence = require('run-sequence');		//同步执行任务
+	var concat = require('gulp-concat'),			//合并文件 
+	var replace = require('gulp-replace');			//替换目标文件中的文本
+	var del = require('del'), 						//文件删除 
+	var url=require('url'),							//url,node提供对URL信息的读取和设置的插件
+	var clean = require('gulp-clean'), 				//文件删除 
+	var htmlmin = require('gulp-htmlmin')			//压缩 HTML
+	var cleancss = require('gulp-clean-css')		//压缩 CSS
+	var cssnano = require('gulp-cssnano'), 			//压缩css 
+	var imagemin = require('gulp-imagemin')			//压缩常见的图片格式，还能压缩 SVG
+	var jpegtran = require('imagemin-jpegtran'),	//压缩jpg图片
+	var pngquant = require('imagemin-pngquant'),	//压缩png图片
+	var stylus = require('gulp-stylus');			//通过gulp将stylus文件编译成css文件
+	var sass = require('gulp-sass'), 				//通过gulp将Sass文件编译成css文件
+	var sass = require('gulp-ruby-sass'), 			//通过ruby-sass将sass文件编译成css 文件 
+	var less = require('gulp-less'),				//通过gulp将less文件编译成css文件
+	var autoprefixer = require('gulp-autoprefixer');//解析css且根据规则添加浏览器兼容性前缀.给 CSS 增加前缀,解决某些CSS属性不是标准属性，有各种浏览器前缀的情况
+	var cssmin = require('gulp-cssmin');			//将css文件进行打包成min.css
+	var minimist = require('minimist');				//命令行参数解析工具
+	var stripDebug = require('gulp-strip-debug');	//移除代码中的console, alert, and debugger声明
+	var util = require('gulp-util')					//最基础的工具，但俺只用来打日志
+	var cached = require('gulp-cached'), 			//缓存当前任务中的文件，只让已修改的文件通过管道
+	var notify = require('gulp-notify'), 			//相当于 console.log() 
+	var filter = require('gulp-filter'),			//过滤筛选指定文件 
+	var rev = require('gulp-rev-append'), 			//插入文件指纹（MD5），把静态文件名改成hash的形式 
+	var browserSync = require('browser-sync'), 		//保存自动刷新 
+	var fileinclude = require('gulp-file-include'), //可以include html文件 	
+	注：gulp-ruby-sass和gulp-sass的不同
+		1>gulp-ruby-sass是调用sass，所以需要ruby环境，需要生成临时目录和临时文件
+		2>gulp-sass是调用node-sass,有node.js环境就够了，编译过程不需要临时目录和文件，直接通过buffer内容转换		
+6.通配符  
+	1> * ：匹配文件路径中的0个或多个字符，但不会匹配路径分隔符，除非路径分隔符出现在末尾
+	2> **：匹配路径中的0个或多个目录及其子目录,需要单独出现，即它左右不能有其他东西了。如果出现在末尾，也能匹配文件
+	3> ? ：匹配文件路径中的一个字符(不会匹配路径分隔符)
+	4> [...]：匹配方括号中出现的字符中的任意一个，当方括号中第一个字符为^或!时，则表示不匹配方括号中出现的其他字符中的任意一个
+	5> !(pn|pn|pn)：匹配任何与括号中给定的任一模式都不匹配的
+	6> ?(pn|pn|pn)：匹配括号中给定的任一模式0次或1次
+	7> +(pn|pn|pn)：匹配括号中给定的任一模式至少1次
+	8> *(pn|pn|pn)：匹配括号中给定的任一模式0次或多次
+	9> @(pn|pn|pn)：匹配括号中给定的任一模式1次
+							  
+	例子:
+		* 		:能匹配 "a.js","x.y","abc","abc/",但不能匹配"a/b.js"
+		*/*/*.js	:能匹配 "a/b/c.js","x/y/z.js",不能匹配"a/b.js","a/b/c/d.js"
+		**/*.js 	:能匹配 "foo.js","a/foo.js","a/b/foo.js","a/b/c/foo.js",只有"**"单独出现才能匹配多级目录
+		?.js		:能匹配 "a.js","b.js","c.js"
+		[xyz].js	:只能匹配 "x.js","y.js","z.js",不会匹配"xy.js","xyz.js"等,整个中括号只代表一个字符
+		[^xyz].js 	:能匹配 "a.js","b.js","c.js"等,不能匹配"x.js","y.js","z.js"
+		a{b,c}d 	:会展开为 "abd","acd"
+		a{b,}c 		:会展开为 "abc","ac"
+		a{0..3}d 	:会展开为 "a0d","a1d","a2d","a3d"
+7.模块使用案例：
+	1>gulp-webserver
+		gulp.task('webserver',function(){
+			gulp.src('./')			//得到根路径
+			.pipe(webserver({
+				livereload:true,	//实时刷新
+				port:8000,
+				host:'localhost',
+				open:true,			// 服务器启动时自动打开网页
+				directoryListing:{
+					enable:true,	//访问的路径是否显示
+					path:'./'		//从哪个目录下开始启动
+				},
+				middleware:function(req,res,next){//对请求进行拦截,req:发送的请求,res:需要接受响应的对象,next:指向下一步操作的指针
+					var urlObj=url.parse(req.url,true);	//
+					console.log(urlObj.pathname);
+					if(urlObj.pathname=='/data/json.json'){
+						res.setHeader('Content-Type','application/json');			//设置响应头
+						fs.readFile('json/data.json','utf-8',function(err,data){	//读取文件
+							res.end(data);											//将文件的数据设置为响应的数据
+						});
+						return;
+					}
+					next();		//放网页继续进行
+				}
+			}))
+		});
+	2>run-sequence
+		var gulp    = require('gulp'),
+		runSequence = require('run-sequence'),
+		pump        = require('pump');
+		gulp.task('default', function(cb) {
+			runSequence(
+				'clean', // 第一步：清理目标目录
+				['minify:js', 'minify:css', 'minify:html', 'minify:image'], // 第二步：打包 
+				'watch', // 第三步：监控
+				cb
+			);
+		});
+	3>gulp.task('testAutoFx', function () {
+			gulp.src('src/css/index.css')
+				.pipe(autoprefixer({
+					browsers: ['last 2 versions', 'Android >= 4.0'], //主流浏览器的最新两个版本,Android WebView >=4.0
+					cascade: true, //是否美化属性值 默认：true 像这样：
+					//-webkit-transform: rotate(45deg);
+					//        transform: rotate(45deg);
+					remove:true //是否去掉不必要的前缀 默认：true 
+				}))
+				.pipe(gulp.dest('dist/css'));
+		});
+	4>gulp.task('compass', function () {
+			gulp.src(['js/*.js','!js/*.min.js'])  //获取文件，同时过滤掉.min.js文件
+				.pipe(uglify())
+				.pipe(gulp.dest('javascript/'));  //输出文件
+		});
+	5>gulp.task('cssmini', function () {
+			gulp.src(['css/*.css', '!css/*.min.css'])  //要压缩的css
+				.pipe(minify())
+				.pipe(gulp.dest('buildcss/'));
+		});
+	6>gulp.task('htmlmini', function () {
+			gulp.src('*.html')
+				.pipe(htmlmini())
+				.pipe(gulp.dest('minihtml'));
+		});
+	7>gulp.task('jsLint', function () {
+			gulp.src('js/*.js')
+				.pipe(jshint())
+				.pipe(jshint.reporter()); // 输出检查结果
+		});
+	8>gulp.task('concat', function () {
+			gulp.src('js/*.js')  //要合并的文件
+				.pipe(concat('all.js'))  // 合并匹配到的js文件并命名为 "all.js"
+				.pipe(gulp.dest('dist/js'));
+		});
+	9>gulp.task('compile-less', function () {
+			gulp.src('less/*.less')
+				.pipe(less())
+				.pipe(gulp.dest('dist/css'));
+		});
+	10>var gulp = require('gulp');
+		var imagemin = require('gulp-imagemin');
+		var pngquant = require('imagemin-pngquant'); //png图片压缩插件
+		gulp.task('default', function () {
+			return gulp.src('src/images/*')
+				.pipe(imagemin({
+					progressive: true,
+					use: [pngquant()] //使用pngquant来压缩png图片
+				}))
+				.pipe(gulp.dest('dist'));
+		});
+	11>gulp.task('default', ['clean'], function() {	//设置默认任务,必须的
+			gulp.start('styles', 'scripts', 'images');
+		});
+	12>gulp.task('clean', function() {	//清理
+			return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false})
+				.pipe(clean());
+		});
+	13>gulp.task('clean', function (callback) {	// 自定义 "clean" 任务
+			// 模式匹配要删除的目标文件
+			del([ 'dist/**/*', '!dist/images', '!dist/html/**/*' ], callback);
+		});	
+8.gulpfile.js例文
+	// 载入外挂
+	var gulp = require('gulp'),
+	var stylus = require('gulp-stylus'),
+	var autoprefixer = require('gulp-autoprefixer'),
+	var minifycss = require('gulp-minify-css'),
+	var jshint = require('gulp-jshint'),
+	var uglify = require('gulp-uglify'),
+	var imagemin = require('gulp-imagemin'),
+	var rename = require('gulp-rename'),
+	var clean = require('gulp-clean'),
+	var concat = require('gulp-concat'),
+	var notify = require('gulp-notify'),
+	var cache = require('gulp-cache'),
+	var livereload = require('gulp-livereload');
+
+	// 样式
+	gulp.task('styles', function() {
+	  return gulp.src('src/styles/main.styl')
+		.pipe(stylus({ style: 'expanded', }))
+		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+		.pipe(gulp.dest('dist/styles'))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(minifycss())
+		.pipe(gulp.dest('dist/styles'))
+		.pipe(notify({ message: 'Styles task complete' }));
+	});
+
+	// 脚本
+	gulp.task('scripts', function() {
+	  return gulp.src('src/scripts/**/*.js')
+		.pipe(jshint('.jshintrc'))
+		.pipe(jshint.reporter('default'))
+		.pipe(concat('main.js'))
+		.pipe(gulp.dest('dist/scripts'))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(uglify())
+		.pipe(gulp.dest('dist/scripts'))
+		.pipe(notify({ message: 'Scripts task complete' }));
+	});
+
+	// 图片
+	gulp.task('images', function() {
+	  return gulp.src('src/images/**/*')
+		.pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+		.pipe(gulp.dest('dist/images'))
+		.pipe(notify({ message: 'Images task complete' }));
+	});
+
+	// 清理
+	gulp.task('clean', function() {
+	  return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false})
+		.pipe(clean());
+	});
+
+	// 预设任务
+	gulp.task('default', ['clean'], function() {
+		gulp.start('styles', 'scripts', 'images');
+	});
+
+	// 文件变动监听
+	gulp.task('watch', function() {
+
+	  // 监听所有.styl
+	  gulp.watch('src/styles/**/*.styl', ['styles']);
+
+	  // 监听所有.js
+	  gulp.watch('src/scripts/**/*.js', ['scripts']);
+
+	  // 监听所有图片
+	  gulp.watch('src/images/**/*', ['images']);
+
+	  // 建立即时刷新页面
+	  var server = livereload();
+
+	  // 监听所有在 dist/  目录下的文件，一旦有更动，便进行刷新
+	  gulp.watch(['dist/**']).on('change', function(file) {
+		server.changed(file.path);
+	  });
+
+	});
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
