@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+    xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+      http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+      ">
+
+  <!-- 3rd Party ライブラリを Spring のトランザクション管理下に参加（DBUnit など） -->
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+    <constructor-arg ref="dbcpDataSource" />
+  </bean>
+
+  <!-- @Repositoryがついているクラスでおきた例外を変換するBeanのpost-processor -->
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+  <!-- JDBC データソース -->
+  <bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+      destroy-method ="close"
+      p:driverClassName   ="${hibernate.connection.driver_class}"
+      p:url               ="${hibernate.connection.url}"
+      p:username          ="${hibernate.connection.username}"
+      p:password          ="${hibernate.connection.password}"
+
+      p:defaultAutoCommit ="${pool.defaultAutoCommit}"
+      p:defaultReadOnly   ="${pool.defaultReadOnly}"
+
+      p:initialSize       ="${pool.initialSize}"
+      p:maxActive         ="${pool.maxActive}"
+      p:maxIdle           ="${pool.maxIdle}"
+      p:minIdle           ="${pool.minIdle}"
+      p:maxWait           ="${pool.maxWait}"
+
+      p:testOnBorrow           ="${pool.testOnBorrow}"
+      p:testOnReturn           ="${pool.testOnReturn}"
+      p:validationQuery        ="${pool.validationQuery}"
+      p:validationQueryTimeout ="${pool.validationQueryTimeout}"
+
+      p:testWhileIdle                 = "${pool.testWhileIdle}"
+      p:timeBetweenEvictionRunsMillis = "${pool.timeBetweenEvictionRunsMillis}"
+      p:minEvictableIdleTimeMillis    = "${pool.minEvictableIdleTimeMillis}"
+      p:numTestsPerEvictionRun        = "${pool.numTestsPerEvictionRun}"
+
+      p:poolPreparedStatements    ="${pool.poolPreparedStatements}"
+      p:maxOpenPreparedStatements ="${pool.maxOpenPreparedStatements}" />
+
+  <!-- Hibernate 設定 -->
+
+  <!-- Hibernate：Spring 統合 Session Factory -->
+  <bean id="hbmSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <!-- DefaultExecutionController を使用する場合は、 com.nextserve (＝com.nextserve.core.mutex.entity) を追加する必要がある -->
+    <property name="packagesToScan" value="com.reloclub.digital_ticket" />
+
+    <property name="hibernateProperties">
+      <map>
+        <entry key="hibernate.default_schema"      value="${hibernate.default_schema}" />
+        <entry key="hibernate.dialect"             value="${hibernate.dialect}" />
+        <entry key="hibernate.show_sql"            value="${hibernate.show_sql}" />
+        <entry key="hibernate.hbm2ddl.auto"        value="${hibernate.hbm2ddl.auto}" />
+        <entry key="hibernate.format_sql"          value="${hibernate.format_sql}" />
+        <entry key="hibernate.use_sql_comments"    value="${hibernate.use_sql_comments}" />
+        <entry key="hibernate.generate_statistics" value="${hibernate.generate_statistics}" />
+        <entry key="hibernate.auto_import"         value="false" />
+        <entry key="hibernate.multiTenancy"        value="NONE" />
+        <entry key="hibernate.jdbc.lob.non_contextual_creation" value="true" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Hibernate：Spring 統合 トランザクションマネージャ -->
+  <bean id="hbmTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager" p:sessionFactory-ref="hbmSessionFactory" />
+
+  <!-- @Transactional で有効になるトランザクションマネージャ -->
+  <tx:annotation-driven transaction-manager="hbmTransactionManager"  />
+
+  <!-- MyBatis 設定 -->
+
+  <!-- MyBatis：Mapper ファイルをスキャンするパッケージ -->
+  <mybatis:scan base-package="com.reloclub.digital_ticket" />
+
+  <!-- MyBatis：Spring 統合 Sessoin Factory -->
+  <bean id="mybatisSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="configLocation" value="classpath:/spring/sqlmap-config.xml"/>
+    <property name="dataSource" ref="dataSource"/>
+    <property name="mapperLocations">
+      <list>
+        <value>classpath:/**/*.sqlmap.${rdbms.type}.xml</value>
+        <value>classpath:/**/*.sqlmap.xml</value>
+      </list>
+    </property>
+    <property name="databaseIdProvider">
+      <bean class="com.nextserve.core.dao.FixedDatabaseIdProvider" p:databaseId="${rdbms.type}" />
+    </property>
+  </bean>
+</beans>

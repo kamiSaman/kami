@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+      ">
+
+    <!-- URL中のセミコロンを許容する -->
+    <bean id = "httpFirewall" class = "org.springframework.security.web.firewall.StrictHttpFirewall">
+      <property name = "allowSemicolon" value = "true" />
+    </bean>
+
+    <!-- メソッド単位でのアクセス制御 -->
+    <sec:global-method-security pre-post-annotations="enabled" />
+
+    <!-- URLのフォーマットチェック -->
+    <sec:http-firewall ref="httpFirewall" />
+
+    <!-- 未ログイン時に遷移するURL（AJAX時は401を返す） -->
+    <bean id="loginUrlAuthenticationEntryPoint" class="com.nextserve.web.spring.security.auth.LoginUrlAuthenticationEntryPointWithAjax">
+        <constructor-arg value="/login" />
+    </bean>
+
+    <!-- アクセス制御とログインページ -->
+    <sec:http auto-config="true" use-expressions="true" entry-point-ref="loginUrlAuthenticationEntryPoint">
+        <!-- アクセス制御機能：
+          access                ：許可する権限名のリスト（カンマ区切り）
+          filters               ：noneのみ。全てのフィルタを除去する
+          method                ：適用させるHTTPメソッド
+          pattern               ：適用させるURLパターン
+          request-matcher-ref   ：URLマッチング処理のためのBean名 （patternの代用）
+          requires-channel      ：http,https / アクセスが必要なプロトコル。any / どちらでも可
+          servlet-path          ：？？
+         -->
+        <sec:intercept-url pattern="/static/**" access="permitAll" />
+        <sec:intercept-url pattern="/login" access="permitAll" />
+        <sec:intercept-url pattern="/logout" access="permitAll" />
+        <sec:intercept-url pattern="/error/**" access="permitAll" />
+        <sec:intercept-url pattern="/api/**" access="permitAll" />
+        <sec:intercept-url pattern="/account-list/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/account-regist/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/account-change/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/purchase-info-list/**" access="isAuthenticated()" />
+        <!--
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        -->
+
+        <!-- 個別画面制限 -->
+
+        <!-- FORM ログイン機能：
+          always-use-default-target           ：ログイン成功後に常に default-target-url を使用するかどうか
+          authentication-details-source-ref   ：
+          authentication-failure-forward-url  ：ログイン失敗時のフォワード先URL
+          authentication-failure-handler-ref  ：ログイン失敗時に実行されるBean名 （authentication-failure-forward-url の代用）
+          authentication-failure-url          ：ログイン失敗時のリダイレクト先URL
+          authentication-success-forward-url  ：ログイン成功時のフォワード先URL
+          authentication-success-handler-ref  ：ログイン成功時に実行されるBean名 （authentication-success-forward-url の代用）
+          default-target-url                  ：ログイン成功後のリダイレクト先URL （要 always-use-default-target）
+          login-page                          ：ログイン表示用URL（未指定：独自の画面を表示）
+          login-processing-url                ：ログイン処理用URL（未指定：/j_spring_security_check）
+          password-parameter                  ：パスワード項目のパラメータ名（未指定：password）
+          username-parameter                  ：ユーザーID項目のパラメータ名（未指定：username）
+         -->
+        <sec:form-login login-page="/login" always-use-default-target="true" default-target-url="/purchase-info-list" username-parameter="loginId"
+        authentication-failure-handler-ref="loginAuthFailureHandler"/>
+
+        <!-- ログアウト機能：
+          delete-cookies        ：ログアウト時に削除するCookie名のリスト（カンマ区切り）
+          invalidate-session    ：ログアウト時に HttpSession.invalidate() を呼ぶかどうか
+          logout-success-url    ：ログアウト後の遷移先URL
+          logout-url            ：ログアウトのURL（未指定：/j_spring_security_logout）
+          success-handler-ref   ：ログアウト後に実行されるBean名
+         -->
+        <sec:logout logout-url="/logout" invalidate-session="true" logout-success-url="/login" />
+
+        <!-- CSRF対策機能：
+          disabled                ：CSRF対策を無効化するかどうか
+          request-matcher-ref     ：URLマッチング処理のためのBean名
+          token-repository-ref    ：CsrfTokenRepositoryの実装クラスのBean名を指定（CookieかSessionか遅延か）
+         -->
+        <sec:csrf disabled="true" />
+    </sec:http>
+
+    <!-- パスワードエンコーダー（BCrypt） -->
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <!-- パスワードエンコーダー（暗号化なし：デモ用） -->
+    <bean id="noHashPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+
+    <bean id="authenticationProvider" class="com.reloclub.digital_ticket.manage.web.page.EMP001.LoginAuthProvider">
+        <property name="userDetailsService" ref="loginAuthUserService" />
+        <property name="passwordEncoder" ref="bCryptPasswordEncoder" />
+    </bean>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <!-- ログイン処理 -->
+        <sec:authentication-provider ref="authenticationProvider" />
+    </sec:authentication-manager>
+
+</beans>

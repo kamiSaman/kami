@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<tools>
+  <toolbox scope="application">
+    <tool key="class"  classname="com.nextserve.core.velocity.ClassTool" />
+<!--
+    <tool key="date"   classname="com.nextserve.contrib.fujisoft.web.velocity.DateToolEx" />
+    <tool key="spring" classname="com.nextserve.contrib.fujisoft.web.velocity.SpringTool" />
+ -->
+    <tool key="date"   classname="org.apache.velocity.tools.generic.DateTool" />
+    <tool key="math"   classname="org.apache.velocity.tools.generic.MathTool" />
+    <tool key="number" classname="org.apache.velocity.tools.generic.NumberTool" />
+    <tool key="render" classname="org.apache.velocity.tools.generic.RenderTool" />
+    <tool key="esc"    classname="org.apache.velocity.tools.generic.EscapeTool" />
+    <tool key="list"   classname="org.apache.velocity.tools.generic.ListTool" />
+<!--
+    <tool key="field"  classname="org.apache.velocity.tools.generic.FieldTool" />
+    <tool key="sorter" classname="org.apache.velocity.tools.generic.SortTool" />
+    <tool key="alternator" classname="org.apache.velocity.tools.generic.AlternatorTool" />
+ -->
+  </toolbox>
+
+  <toolbox scope="request" xhtml="true">
+<!--
+    <tool key="link"     classname="com.nextserve.contrib.fujisoft.web.velocity.MultiTenantLinkTool" position="0" />
+ -->
+    <tool key="cookie"   classname="org.apache.velocity.tools.view.tools.CookieTool" />
+<!--
+    <tool key="import"   classname="org.apache.velocity.tools.view.tools.ImportTool" />
+    <tool key="params"   classname="org.apache.velocity.tools.view.tools.ParameterParser" />
+    <tool key="render"   classname="org.apache.velocity.tools.view.tools.ViewRenderTool" />
+    <tool key="browser"  classname="org.apache.velocity.tools.view.tools.BrowserSnifferTool" />
+    <tool key="mill"     classname="org.apache.velocity.tools.generic.IteratorTool" />
+    <tool key="link"     classname="org.apache.velocity.tools.struts.StrutsLinkTool" />
+    <tool key="slink"    classname="org.apache.velocity.tools.struts.SecureLinkTool" />
+    <tool key="text"     classname="org.apache.velocity.tools.struts.MessageTool" />
+    <tool key="errors"   classname="org.apache.velocity.tools.struts.ErrorsTool" />
+    <tool key="messages" classname="org.apache.velocity.tools.struts.ActionMessagesTool" />
+    <tool key="form"     classname="org.apache.velocity.tools.struts.FormTool" />
+    <tool key="tiles"    classname="org.apache.velocity.tools.struts.TilesTool" />
+    <tool key="pager"    classname="com.nextserve.core.common.struts.VelocityPagerTool" />
+    <tool key="validator" classname="org.apache.velocity.tools.struts.ValidatorTool" />
+ -->
+  </toolbox>
+
+    <toolbox scope="session">
+    </toolbox>
+</tools>

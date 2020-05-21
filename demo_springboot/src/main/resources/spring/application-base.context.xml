@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+      ">
+
+  <!-- Spring Framework: アノテーションを有効にする -->
+  <context:annotation-config />
+
+  <!-- AOPを有効にする -->
+  <aop:config proxy-target-class="true" />
+  <aop:aspectj-autoproxy proxy-target-class="true" />
+
+  <!-- Spring Framework: コンポーネント探索パッケージ -->
+  <context:component-scan base-package="com.bootserver, com.kami.manage" />
+
+  <!-- @Value や context.xml 上で ${プロパティキー} を指定できるファイル一覧 -->
+  <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:/conf/system.properties</value>
+        <value>classpath:/conf/message.properties</value>
+        <value>classpath:/conf/jdbc.properties</value>
+        <value>classpath:/conf/jdbc/pgsql.properties</value>
+      </list>
+    </property>
+    <property name="fileEncoding" value="UTF-8" />
+  </bean>
+
+  <!-- システムで使用するプロパティ設定 -->
+  <bean id="config" class="org.apache.commons.configuration.PropertiesConfiguration" init-method="refresh">
+    <constructor-arg index="0" type="java.lang.String" value="conf/system.properties" />
+    <property name="encoding" value="UTF-8" />
+  </bean>
+
+  <!-- サーバ再起動を必要としないプロパティ設定 -->
+  <bean id="reloadableConfig" class="org.apache.commons.configuration.PropertiesConfiguration" init-method="refresh">
+    <constructor-arg index="0" type="java.lang.String" value="conf/reloadable.properties" />
+    <property name="encoding" value="UTF-8" />
+    <property name="reloadingStrategy" ref="fileChangedReloadingStrategy" />
+  </bean>
+  <bean id="fileChangedReloadingStrategy" class="org.apache.commons.configuration.reloading.FileChangedReloadingStrategy">
+    <property name="refreshDelay" value="100" />
+  </bean>
+
+  <!-- MessageUtility で使用する メッセージリソース - resource/message_*.properties -->
+  <bean id="messageSource" class="com.nextserve.core.spring.context.PlaceholderConfigurableReloadableResourceBundleMessageSource">
+    <property name="basenames">
+      <list>
+        <value>conf/message</value>
+        <value>conf/system</value>
+      </list>
+    </property>
+    <property name="cacheSeconds" value="0" />
+    <property name="defaultEncoding" value="UTF-8" />
+  </bean>
+
+  <!-- ログ出力 -->
+  <bean class="com.nextserve.core.logging.aop.AspectLoggingAdvice" />
+  <bean class="com.nextserve.core.spring.beans.factory.Slf4JLoggerFactoryBean" />
+
+  <!-- メッセージ管理 -->
+  <bean class="com.nextserve.core.spring.context.MessageUtility" />
+
+  <!-- Bean Validation -->
+  <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <property name="validationMessageSource" ref="messageSource" />
+  </bean>
+
+  <!-- Velocity Engine メールテンプレート用 -->
+  <bean id="velocityEngine4Mail" class="com.nextserve.web.spring.beans.factory.VelocityEngineWebFactoryBean">
+    <property name="velocityPropertiesLocation" value="/conf/velocity/velocity-mail.properties" />
+    <property name="toolboxFilePath" value="/conf/velocity/velocity-toolbox.xml" />
+  </bean>
+</beans>

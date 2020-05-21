@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%replace(%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [sid=%X{sid}] [loginId=%X{loginId}] [%c] - %msg%n){\.xml\.,[snip]}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>/var/log/webapps/dt_management_web.log</file>
+    <encoder>
+      <pattern>%replace(%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [sid=%X{sid}] [loginId=%X{loginId}] [%c] - %msg%n){\.xml\.,[snip]}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.springframework" level="INFO" />
+  <logger name="org.apache.commons" level="INFO" />
+  <logger name="org.hibernate" level="WARN" />
+  <logger name="org.mybatis.spring" level="WARN" />
+  <logger name="org.jboss.resteasy" level="INFO" />
+
+  <!-- ユーザアプリケーションログ -->
+  <logger name="com.nextserve" level="INFO" />
+  <logger name="org.apache.commons" level="INFO" />
+
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>

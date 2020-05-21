@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+      ">
+
+  <!-- Velocity Engine Web画面用(VelocityViewServletの設定を借りる) -->
+  <bean id="velocityEngine" class="com.nextserve.web.spring.beans.factory.VelocityEngineWebFactoryBean">
+    <property name="velocityServletName" value="velocityViewServlet" />
+  </bean>
+
+  <!-- Thymeleaf テンプレート設定 -->
+  <bean id="thymeleafTemplateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="/WEB-INF/view/" />
+    <property name="suffix" value=".html" />
+    <property name="templateMode" value="HTML" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="cacheable" value="false" />
+  </bean>
+
+  <!-- Thymeleaf メッセージ -->
+  <bean id="thymeleafMessageResolver" class="org.thymeleaf.spring5.messageresolver.SpringMessageResolver">
+    <property name="messageSource" ref="messageSource" />
+  </bean>
+
+  <!-- Thymeleaf テンプレートエンジン -->
+  <bean id="thymeleafTemplateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+    <property name="templateResolver" ref="thymeleafTemplateResolver" />
+    <property name="messageResolver" ref="thymeleafMessageResolver" />
+    <property name="enableSpringELCompiler" value="true" />
+    <property name="additionalDialects">
+      <set>
+        <bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect" />
+      </set>
+    </property>
+  </bean>
+
+</beans>
