@@ -1,0 +1,3 @@
+1、dbvisualizer 
+	现象：9.1.6  mysql	tinyint(1)类型的字段  值为0 1，显示false true
+	方案：单击数据库连接，在Properties中找到Driver Properties，找到tinyInt1isBit，设置value为false，就可以正常显示

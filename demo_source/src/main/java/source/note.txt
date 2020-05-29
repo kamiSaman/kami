@@ -1,0 +1,306 @@
+﻿本机地址：\\172.29.140.119
+共享仓库：\\172.29.139.1\share01\90_共通\tools
+共享文档：V:\A0-全組織開示情報\A21_会社規程\40_品質関連
+手册资料：V:\A0-全組織開示情報\A21_会社規程
+加班申请单：V:\B0-組織別共有\17_lion\10_第1開発部\03_人员管理\勤怠管理\残業申請\2019年\7月
+日文eclipse下载路径：http://mergedoc.osdn.jp/
+redmine：	https://kualalumpur266c.platon.fsi.co.jp/redmine/projects/kaishu-rheleol/issues
+WLAN密码:fcn2019!
+
+あa		いi			うu		えe		おo
+かka		きki			くku		けke		こko
+さsa		しsi/shi		すsu		せse		そso
+たta		ちti/chi		つtu/tsu	てte		とto
+なna		にni			ぬnu		ねne		のno
+はha		ひhi			ふhu/fu	へhe		ほho
+まma		みmi			むmu		めme		もmo
+やya		（い）(i)		ゆyu		（え）(e)	よyo
+らra		りri			るru		れre		ろro
+わwa		（い）(i)		（う）(u)	（え）(e)	をwo
+
+HttpWatch是强大的网页数据分析工具，安装后将集成到Internet Explorer工具栏中。它不用代理服务器或一些复杂的网络监控工具，就能抓取请求及响应的完整信息，包括Cookies、消息头、查询参数、响应报文等，是Web应用开发人员的必备工具。
+
+1、java
+	1>日志
+		log4j
+		Logback
+			是由log4j创始人设计的又一个开源日志组件。
+			logback当前分成三个模块：logback-core,logback-classic和logback-access。logback-core是其它两个模块的基础模块。
+			logback-classic是log4j的一个 改良版本。
+			此外logback-classic完整实现SLF4J API使你可以很方便地更换成其它日志系统如log4j或JDK14 Logging。logback-access访问模块与Servlet容器集成提供通过Http来访问日志的功能。
+	2>spring单元测试
+		spring-test
+		junit
+	3>eclipse  中tomcat带的server项目
+	4>spring
+		spring事务管理（声明式，注解式）
+		springMVC内容协商管理器
+	5>数据库配置文件
+	6>服务之间的调用 
+		调用服务的三种方式：
+			下面从最简单的 HelloWorld 开始，介绍 Axis 的使用方法。首先在 WEB-INF 文件夹下建立 server-config.wsdd 文件，在 Axis 1.x 当中，此文件正是用于管理服务发布的默认配置文件。首先 service 用于定义对外暴露的服务，其中 name 属性用于定义服务的名称。像下面例子，当 name 为 PersonService 时，对外暴露的服务路径则对应为 http://localhost:8080/axis.server/services/PersonService 。
+		而 parameter 用于定义服务的相关属性，className 表示此服务的实现类，而 allowedMethods 表示所公开的服务方法，“*" 则默认为公开此类中的所有 public 公共方法。而 scope 则是用于定义服务对象生成的方式，它包括三个选项：request、session、application 。
+		request 是默认选择，表示为每个请求生成一个服务对象; 
+		session 表示对同一个客户代理对象所发送的请求使用同一个服务对象，并把服务信息放在同一个上下文当中。当使用有状态服务时，使用此 session 更为合适，在下节将再作进一步介绍; 
+		application 类似于使用单体模式，表示所示的请求均使用同一个服务对象，当使用无状态服务时使用 application 能有效提高运行效率。
+		最后在 transport 中定义一个 requestFlow 处理类 org.apache.axis.handlers.http.URLMapper，表示在系统接受到 http 请求时，将会调用 URLMapper 类来处理路径映射等问题。
+		基本的 Axis Web 服务由四部分组成：Axis Servlet 、Axis 部署描述、 远程服务接口、服务实现类。
+		Axis Servlet 是 Axis 的核心，它负责 WSDL 基础服务信息的公开，并把 SOAP 请求转化为 Java 方法的调用，最后把返回值转化为 SOAP 。
+			Axis Servlet 隐藏了构建 Web 服务的大量代码，使用开发人员不用直接与 SOAP 打交道便可轻松完成 Web 服务的开发。
+			Axis 部署描述是一个XML文档，它用于管理 Web 服务的发布，决定哪些服务类需要通过 SOAP 对外公开 。
+			远程服务接口并非必要的，但在很多的 Web 服务开发过程中都会使用远程服务接口用于对外暴露服务类的方法，在服务器端通过服务实现类去继承实现服务接口。
+		在 web.xml 文件下加入 AxisServlet 配置后，系统就会对以后缀为 *.jws 及路径为 /services/　* 的请求进行监听，遇到此类请求时将把信息交由  org.apache.axis.transport.http.AxisServlet 进行处理。
+		axis.jar axis.jar包是一款由apache推出的适用于axis的完整全功能包，Axis其实本质上就是一个SOAP引擎，但是想完全的使用它的功能, jar包是必不可少的
+		axis-ant.jar	webservice 开发需要使用的jar包，适用java开发。
+		wsdl4j-1.5.1.jar	Axis运行所需要的组件包 
+		saaj.jar	创建到端点的点到点连接的方法、创建并处理SOAP消息和附件的方法，以及接收和处理SOAP错误的方法.
+		http://localhost:7002/WebServiceTest/services/HelloServices?wsdl 
+		通过wsimport（jdk自带工具）生成：wsimport -s C:\tmp -verbose http://localhost:7002/WebServiceTest/services/HelloServices?wsdl
+2、git使用
+3、日志分析框架
+4、前段框架
+	1>前端框架基本概念
+		1)开发语言技术，主要是ES6&7，coffeescript，typescript等；
+		2)开发框架，如Angular，React,Vue.js，Angular2等； 
+		3)开发工具的丰富和前端工程化，像Grunt，Gulp，Webpack，npm，eslint，mocha这些技术； 
+		4)前端开发范围的扩展，如服务端的nodejs,express,koa,meteor,GraphQL;移动端和跨平台的PhoneGap,ionic,ReactNative，Weex;计算机图形学和3维建模领域的WebGL(three.js等)；可视化与数据分析领域的d3.js等；
+			包括浏览器不断开放的更多新特性和接口比如svg,canvas,蓝牙，电池，本地存储，service worker，Houdini等新的API能力，以及像WASM这样的底层优化技术；
+		5>就开发框架这块，Angular(1&2),React,Vue目前占据着主流地位而且会相持比较长的一段时间，所以这里对比一下这三门技术，以便之后的技术选型。
+			前端mvc框架，如angularjs，backbone：
+			mvp:view和model不能直接通信，所有的交互都由presenter来做，其他部分的通信都是双向的
+			view较薄 ，presenter较为厚重	
+		2>mvc框架：vue框架，angularjs，backbone
+		3>mvp框架：
+		4>跨域访问：
+5、枚举类
+6、校验类	https://blog.csdn.net/mengxingyuanlove/article/details/50707746
+
+7、nginx
+8、dubbo zookeeper
+9、消息队列方面，kafka
+ Redis缓存，日志框架，MyCAT分库分表
+ 即数据结构）和多线程并发这两块，在此基础上，大家可以准备些设计模式和虚拟机
+ 
+ 10、springboot、spring、springMVC、mybatis
+	mysql 调优
+	redis
+	rabbitmq
+	linux
+	snv git
+	
+	html5 css3 js jquery es6
+	vue全家桶
+	element-ui
+	echarte、ztree、百度地图api
+	webpack
+	
+	
+ 
+ 
+ 
+1)，SQL高级方面，比如group by, having，左连接，子查询（带in），行转列等高级用法。
+2)，建表方面，你可以考虑下，你项目是用三范式还是反范式，理由是什么？
+3)，尤其是优化，你可以准备下如何通过执行计划查看SQL语句改进点的方式，或者其它能改善SQL性能的方式（比如建索引等）。
+4)，如果你感觉有能力，还可以准备些MySQL集群，MyCAT分库分表的技能。比如通过LVS+Keepalived实现MySQL负载均衡，MyCAT的配置方式。同样，如果可以，也看些相关的底层代码。
+
+postman:  kami111  king123.   kong.lingying@fujisoft-china.com
+
+1、个人信息：
+	1>工号：860119012
+	2>邮件地址：kong.lingying@fujisoft-china.com  Fuji991!
+	3>邮件初次登陆：password.fujisoft-china.com
+	4>邮件登陆地址：http://portal.partner.microsoftonline.cn
+	5>安全考试地址：http://172.29.139.7:8080/Portal/home
+	6>用友操作系统：http://172.29.139.203/U8SL/Login.aspx		编号：327
+	7>手机平台：860119012	123456a
+	8> 日语名：孔令迎　　コウ レイ ゲイ
+	9> 240530
+    
+
+2、常用信息：
+	1> 常用邮件地址
+		薛凤林：xue.fenglin@fujisoft@china.com
+		王 涛：wang.tao@fujisoft-china.com
+		陈 晨：chen.chen@fujisoft-china.com
+	2>jar包下载地址：
+		http://www.java2s.com/Code/Jar/s/Catalogs.htm
+	3>oracle用户信息：
+		用户名：1151643598@qq.com		
+		密 码：King2222>
+	4>git信息：
+		帐户：KamiSaman  
+		邮箱：k1151643598@163.com   
+		密码：konglingying123.  
+		860119012 <860119012@DESKTOP-ES5PICB.fcn.local>
+		https://github.com/kamiSaman/kami.git
+	5>日文网站
+		日本知乎：https://qiita.com
+		
+	5>svn帐号
+		liu.shenghua
+		Liufuji07
+		
+		meng.fei
+		MengFei773
+		
+		konglingying
+		kong@1234
+		
+	6> 张龙电脑地址：172.29.140.121
+		890618031
+		123456b?
+	7> 孟菲ip:172.29.140.79
+		860117070
+		561234a?
+
+	8> redmine
+		kong.lingying	xsr615XD
+		
+	9> 163邮箱
+		k1151643598@163.com 
+		king123.
+	
+	10>ios 开发者用户appid
+			kong.lingying@fujisoft-china.com
+			King123.	
+			
+	11、丁倩skpye
+		用户名：forwork043@hotmail.com
+		密  码：fcn2018!!		
+		
+	12>你的社保卡在农业银行，需要你自己去取	
+
+	  
+1、公司信息
+	1>公司结构：
+		总经理：孙任宏
+	2>开发体系：
+		PM	项目经理
+		PL	项目组长
+		SE	分析设计员
+		PG	开发人员
+	3>SL	测试组长
+		TE	测试人员
+		SQA	质量保证员
+		CM	配置管理员
+	4>测试体系：
+		黑盒、白盒、集成、系统、验收
+		需求评审、测试计划书、测试案例、测试报告、测试报告评审
+	5、
+
+Java知识导航总图
+1.系统构架
+
+企业服务总线(ESB)、微服务、面向服务的架构（SOA）
+
+了解分布式文件存储系统，掌握集群化开发及部署
+
+2.系统系统集成技术
+
+Wsbservice、Socket
+
+3.RPC远程调用的相关开源框架：
+
+dubbo、zookeeper、netty 
+
+4.关系型数据库
+
+sqlserver oracle db2 mysql postgis
+
+熟练掌握ddl及dml命令
+
+5.常用的缓存（nosql数据库）
+
+memcache Redis Mongodb
+
+6.消息中间件
+
+ActiveMQ/ApolloMQ RabbitMQ RocketMQ/Kafka tuxedo ZeroMQ
+
+Tuxedo是BEA公司（现已被Oracle公司收购）的一个客户机/服务器的“中间件”产品，它在客户机和服务器之间进行调节，以保证正确地处理事务。它用C语言技术开发的并且有很高性能。
+
+7.后端框架
+
+Spring、SpringMVC、Mybatis、Spring Boot、SpringCloud、Hibernate、Structs、shiro、Liferay
+
+8.前端框架
+
+Jquery，EasyUI，Bootstrap，DWR，ExtJS，Ajax，Vue，Angular，React，Node.js
+
+精通JSP,Servlet,JDBC,JS
+
+DWR：(Direct Web Remoting)是一个用于改善web页面与Java类交互的远程服务器端Ajax开源框架
+
+Vue：是一套构建用户界面的渐进式框架。Vue 只关注视图层， 采用自底向上增量开发的设计。 
+
+9.Java技术
+
+J2EE技术基础，反射、IO、泛型集合、多线程
+
+对JVM有一定的了解
+
+10.项目管理
+
+SVN github maven gradle perforce Jenkins Gitlab Docker
+
+11.数据格式
+
+xml、yml、json
+
+12.服务器
+
+Tomcat Jetty solr websphere weblogic jboss nginx 服务器，
+
+Jetty是一个开源的servlet容器，它为基于Java的web容器，例如JSP和servlet提供运行环境。Jetty是使用Java语言编写的，它的API以一组JAR包的形式发布。开发人员可以将Jetty容器实例化成一个对象，可以迅速为一些独立运行(stand-alone)的Java应用提供网络和web连接。
+
+Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。
+
+weblogic:WebLogic是美国Oracle公司出品的一个application server，确切的说是一个基于JAVAEE架构的中间件，WebLogic是用于开发、集成、部署和管理大型分布式Web应用、网络应用和数据库应用的Java应用服务器。将Java的动态功能和Java Enterprise标准的安全性引入大型网络应用的开发、集成、部署和管理之中。
+
+jboss:是一个基于J2EE的开放源代码的应用服务器。 JBoss代码遵循LGPL许可，可以在任何商业应用中免费使用。 
+
+13.接口设计
+
+Restful
+
+14.开发工具
+
+Eclipse、MyEclipse、Sts、idea
+
+15.原型设计工具
+
+Axure
+
+16.操作系统
+
+熟悉Unix/Linux操作系统常用命令，能部署配置Nginx、Tomcat、Jboss等常用中间件者优先；
+
+会使用shell, python等脚本语言
+
+.熟悉Linux操作系统的基本操作以及shell脚本的编写。
+
+ 熟悉Linux系统基本命令的操作，Nginx负载均衡和反向代理
+
+17.实际项目
+
+ 大型电商类项目开发经验
+
+有北斗物联网大数据平台研发经验
+
+有过性能调优经验的优先考虑
+
+18.其他
+
+分布式Socket通讯、分布式队列、分布式任务分发框架、全文检索、海量数据存储与分布式存储技术，
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,284 @@
+0、	1)svn与git的区别
+		SVN是集中式版本控制系统，版本库是集中放在中央服务器的
+		Git是分布式版本控制系统，每个人的电脑就是一个完整的版本库
+	2)逻辑结构		https://www.runoob.com/git/git-workspace-index-repo.html
+		1>工作区：本地目录
+		2>版本库：(工作区目录下隐藏目录.git)
+			|-暂存区：.git/index文件（索引），
+			|-对象库：git/objects
+			|-HEAD游标：默认指向master分支，可通过reset（版本回退）更换当前本地库时那个版本
+			|-本地仓库（master分支）
+			|-远程库
+	3)动作：
+		1>git add:暂存区的目录树被更新，工作区修改文件写入到对象库，该对象的ID被记录在暂存区中。
+		2>git commit:暂存区的目录树同步到master分支的目录树
+		3>未使用“git add”缓存代码
+			git checkout 【filename】  				//丢弃工作区某个文件的修改(未进缓冲区的文件不受限制)
+			git checkout .  						//丢弃工作区所有文件的修改
+		4>已使用“git add”缓存代码
+			git reset HEAD 【filename】  				//撤销暂存区某个文件的修改，重新放回工作区
+			git reset HEAD .  						//撤销暂存区所有文件的修改，重新放回工作区
+		5>已使用“git commit”提交代码  
+			git reset --hard HEAD^ 【filename】   		// 回退某个文件到上一次commit的状态
+			git reset --hard HEAD^    				// 回退所有文件到上一次commit的状态
+			git reset --hard  <commit id>   		// 回退所有文件到某个commit
+		5>已使用“git commit”命令提交代码
+			> git log
+			> git reset 【id】
+		
+			git reset --hard HEAD^ 【filename】	    // 回退某个文件到上一次commit的状态
+			git reset --hard HEAD^    				// 回退所有文件到上一次commit的状态
+			git reset --hard  【id】   				// 回退所有文件到某个commit
+			git reset  								// 回退版本库到上一个commit的状态, 工作区不变。
+			git reset 【id】  							// 回退版本库到指定的<commit>,  工作区不变。
+			git reset --hard  						// 回退版本库和工作区到上一次commit的状态。--hard表明覆盖所有的修改,而且是不可逆的, 因此使用之前要谨慎。
+			git reset --hard 【id】  					// 回退版本库和工作区到指定的<commit>。	
+			git reset --hard origin/master  		// 将版本库和工作区回退到和远程的一样。
+		
+
+1、资料	
+	1>git： 
+		https://blog.csdn.net/youzhouliu/article/details/78952453
+		https://www.runoob.com/git/git-server.html
+	2>sourcetree: 
+		https://jingyan.baidu.com/article/59703552beda4f8fc1074063.html
+	3>git信息：
+		帐户：KamiSaman  
+		邮箱：k1151643598@163.com   
+		密码：konglingying123.  
+		860119012 <860119012@DESKTOP-ES5PICB.fcn.local>
+		https://github.com/kamiSaman/kami.git
+	
+2、步骤
+	1)安装本地git
+	2)申请github帐号
+	3)创建SSH Key	ssh-keygen  -t rsa –C “youremail@example.com”
+		在用户主目录下.ssh目录，id_rsa和id_rsa.pub这两个文件
+		id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥
+	4)克隆项目到本地
+		git clone 【url】
+		git init
+	
+3、msysgit是 windows版的Git	：Git --> Git Bash
+	1>配置用户名和邮箱：									git config --system --unset credential.helper				重置账户密码
+	git config  global user.name  "kami"				
+	git config  --global user.email "kami@aa.com"
+	
+	2>本地常用命令：
+	git init					初始化仓库
+	git add 【name】				文件添加到本地版本库
+	git commit -m 【"注释"】 【name】	文件提交到本地版本库（-m 本次提交的注释内容，这个可以不写，但最好写上，不然会报错）
+	git commit -a -m 【name】		提交所有修改文件到本地仓库
+	git commit --amend			不修改提交版本修改内容（合并缓存区的修改和最近的一次commit, 然后用生成的新的commit替换掉老的）
+	git push origin 分支名称		本地分支提交到远程库（origin不可少）
+	git status					展示是否还有文件未提交
+	git diff 【name】		 		展示修改内容
+	git log						展示修改历史(按q退出)
+	git log -p -2 				展示最近两次提交历史记录，并且包含git diff差异信息
+	git log –pretty=oneline		展示修改历史(简洁版)
+	git reset  --hard HEAD^		回退上一版本
+	git reset  --hard HEAD~100	回退上前100版本
+	git reset  --hard 6fcfc89	回退到具体版本（版本号）
+	git reflog					为回退之前状态查看版本号
+	rm 【name】					删除工作区文件（彻底删除需提交）
+	
+	3>分支管理:
+	git branch					查看分支列表
+	git branch 【name】			创建分支
+	git checkout 【name】			切换分支（也可用于工作区、暂存区、本地库代码的同步，以本地库为主）
+	git checkout –b 【name】		创建+切换分支
+	git git branch -d 【name】		删除分支
+	git merge 【name】				合并其他分支到当前分支上（【name】其他分支名称）
+	git remote					查看远程库的信息
+	git git remote -v			查看远程库的详细信息
+	
+	4>远程管理：
+	git pull							抓取远程分支
+	git status							查看因合冲突而处于未合并状态的文件
+	git push origin 【name】				本地分支提交到远程库
+	git push origin --delete 【braName】	删除远程分支
+	git fetch origin master 			拉取指定分支的变化
+	git fetch 							拉取所有分支的变化
+	git fetch -p						拉取所有分支的变化，并且将远端不存在的分支同步移除【推荐】
+	
+	5>合并
+	git merge 		master分支和合并分支共同成一个新的master分支
+	git rebase		合并分支合并到原master分支
+	
+4、多人合作，分支冲突
+	1> 远程抓取分支				git pull					
+	2> 如果失败，执行命令			git push --set-upstream dev origin/【name】；	
+	3> 再次pull					git pull	
+	4> 手动解决冲突
+	5> 添加本地暂存区				git add 【name】
+	6> 本地提交					git commit 【name】
+	7> 推送远程					git push origin 【name】
+	
+5、合并分支（marge）
+	1>$ git merge 【branch_name】
+		Auto-merging runoob.php
+		CONFLICT (content): Merge conflict in runoob.php
+		Automatic merge failed; fix conflicts and then commit the result.
+	2>$ cat runoob.php     # 代开文件，看到冲突内容
+		<?php
+		<<<<<<< HEAD
+		echo 1;
+		=======
+		echo 'runoob';
+		>>>>>>> change_site
+		?>
+	3>$ vim runoob.php 		
+		<?php
+		echo 1;
+		echo 'runoob';
+		?>
+	4>$ git diff			#修改后确认,比较工作区与暂存区
+	5>$ git status -s		#更新暂存区
+		UU runoob.php
+	  $ git add runoob.php
+	6>$ git status -s		更新本地库
+		M  runoob.php
+	  $ git commit
+		
+6、git bash命令
+	1>常用命令:
+	clear				// 清屏
+	reset				// 重启
+	cd ..				// 回到上级目录
+	pwd					// 显示当前目录
+	ls					// 查看文件列表
+	ll					// 查看文件列表详情
+	touch 【name】			// 新建文件
+	mkdir test			// 建立新文件夹
+	rm test.js			// 删除文件
+	rm -rf test			// 删除文件夹及其下文件
+	mv 【nameA】 【path】	// 移动文件test到abc（同级）文件夹下
+	mv bb.txt cc.txt	// 把文件bb.txt重命名为cc.txt
+	mv aa.txt ..		// 把文件aa.txt移动到上一级目录
+	cp test.js abc		// 复制文件test到abc（同级）文件夹下
+	vi test.js			// 编辑文件
+	cat test.js			// 查看文件内容
+	echo '内容' > 文件名	// 输出内容到文件中，每次输入都是覆盖原来的文件
+	echo '内容' >> 文件名	// 输出内容到文件中，每次输入都是追加新内容
+	diff aa.js bb.js	// 比较两个文件的不同
+	
+	2>删除相关参数:
+	rm    				删除文件
+	rm -f   			强制删除文件，假如要删除的文件不存在,也不提示 rm -f 文件名 
+	rm -i   			删除文件，删除前提示是否删除，默认不删除，若要删除，输入y
+	rm -d   			删除空白目录 
+	rm -r   			删除有内容的目录,将指定目录下的所有文件及子目录一并处理，递归删除
+	rm -rf filename   	强制删除目录或文件(目录有内容时，也删除)
+	rm dir   			删除空文件夹(目录)
+
+	3>git vim编辑器命令:
+		1)按a,i或o进入编辑模式
+		2)按 ESC 进入操作模式
+		3)在操作模式下：
+			|-:w	保存
+			|-:wq	为写入退出
+			|-:q! 	不保存退出 
+			|-:q 	内容未修改可退出 
+			|-：e!	放弃所有文件修改,不退出命令行
+	
+8、实用问题
+	1> 推送时，无法显示推送分支
+		解决方案：更新git客户端和sourceTree的版本
+	2> 修改文件名包含空格，提交时可用""包裹提交
+	3> 错误情况：Updates were rejected because the tip of your current branch is behind
+	   错误原因：我在远端 github 的版本库创建页面点击创建 README.md 按钮创建了说明文档，但是没有 pull 到本地，这样就产生了版本冲突问题。
+	   解决方法：
+			1，使用强制 push 的方法,该方法会使远程修改丢失，一般是不可取的，尤其是多人协作开发的时候
+				$ git push -u origin master -f
+			2，push 前先将远程 repo 修改 pull 下来,先 pull 下来，在次进行推送到远端
+				$ git pull origin master
+				$ git push -u origin master
+	4> 上传超过100M的文件：
+		1） 使用Git LFS，在官网 https://git-lfs.github.com/ 下载git-lfs-windows-v2.8.0.exe并安装
+		2） 跟踪你要push的大文件git lfs track "aaa.h5",这时会生成一个.gitattributes文件。
+		3) 这里很重要，一定要先将上一步生成的.gitattributes文件上传到仓库也就是要上传三部曲
+			$ git lfs track "aaa.h5"
+			$ git add .gitattributes
+			$ git commit -m "add .gitattributes"
+			$ git push origin master
+			
+			$ git add aaa.h5
+			$ git commit -m "add aaa.h5"
+			$ git push origin master
+	5>  【--】和【-】的区别
+		--：后跟完整单词
+		- ：后跟字符串，可多个参数进行拼接
+		二者不可替换
+	
+9、Git服务器搭建
+	1)安装Git
+		$ yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
+		$ yum install git
+		接下来我们 创建一个git用户组和用户，用来运行git服务：
+		$ groupadd git
+		$ useradd git -g git
+	2)创建证书登录	
+		收集所有需要登录的用户的公钥，公钥位于id_rsa.pub文件中，把我们的公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。如果没有该文件创建它：
+		$ cd /home/git/
+		$ mkdir .ssh
+		$ chmod 755 .ssh
+		$ touch .ssh/authorized_keys
+		$ chmod 644 .ssh/authorized_keys
+	3)初始化Git仓库
+		首先我们选定一个目录作为Git仓库，假定是/home/gitrepo/runoob.git，在/home/gitrepo目录下输入命令：
+		$ cd /home
+		$ mkdir gitrepo
+		$ chown git:git gitrepo/
+		$ cd gitrepo
+		$ git init --bare runoob.git
+		Initialized empty Git repository in /home/gitrepo/runoob.git/
+		以上命令Git创建一个空仓库，服务器上的Git仓库通常都以.git结尾。然后，把仓库所属用户改为git：
+		$ chown -R git:git runoob.git
+	4、终端克隆仓库（192.168.45.4为Git所在服务器ip，需要将其修改为你自己的Git服务ip。）
+		$ git clone git@192.168.45.4:/home/gitrepo/runoob.git
+		Cloning into 'runoob'...
+		warning: You appear to have cloned an empty repository.
+		Checking connectivity... done.
+		
+10、回退已commit未push
+	1>git reset -hard HEAD 2488dfefb95b7b74e6a398b842c81ce1f95c2292		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

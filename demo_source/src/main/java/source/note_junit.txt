@@ -16,3 +16,75 @@
 	5> 测试单元中的每个方法必须可以独立测试，测试方法间不能有任何的依赖
 	6> 测试类使用Test作为类名的后缀（不是必须）
 	7> 测试方法使用test作为方法名的前缀（不是必须）	
+3、API，junit组成
+	1> junit.framework，最重要的程序包是，包含了所有的核心类
+		1） Assert：断言方法的集合
+		2） TestCase：一个定义了运行多重测试的固定装置
+		3） TestResult：执行测试样例的所有结果的集合
+		4） TestSuite：测试的集合
+	2> 	Assert类的方法		(断言方法结果为false时，测试方法会被记录)
+		1） assertEquals(expected,actual):检查两个变量或者等式是否平衡
+		2） assertFalse(condition)		:检查条件是假
+		3） assertTrue(condition)		:检查条件是真
+		4） assertNull(object)			:检查对象为空的
+		5） assertNotNull(object)		:检查对象不是空的
+		6） fail（）						:没有报告的情况下使测试不通过
+	3> TestCaset类	
+		1） countTestCases（）				：执行的测试案例计数
+	    2） createResult（）				：创建一个默认的 TestResult 对象
+	    3） getName（）						：执行测试方法的
+	    4）
+	
+3	String getName()
+获取 TestCase 的名称
+4	TestResult run()
+一个运行这个测试的方便的方法，收集由TestResult 对象产生的结果
+5	void run(TestResult result)
+在 TestResult 中运行测试案例并收集结果
+6	void setName(String name)
+设置 TestCase 的名称
+7	void setUp()
+创建固定装置，例如，打开一个网络连接
+8	void tearDown()
+拆除固定装置，例如，关闭一个网络连接
+9	String toString()
+返回测试案例的一个字符串表示
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+测试框架
+	1> 特性
+		1） 测试工具：是一整套固定的工具用于基线测试。	例：setUp() 和 tearDown()的方法
+		2） 测试套件：意味捆绑几个测试案例并且同时运行。	例：@RunWith 和 @Suite
+		3） 测试运行器：用于执行测试案例
+		4） 测试分类：在编写和测试 JUnit 的重要分类
+
+4、概述
+	1> JUnit 是一个 Java 编程语言的单元测试框架
+	2> junit 特点
+		1） 开源
+		2） 提供注释用于识别测试方法
+		3） 提供断言用于预测测试结果
+		4） 测试结果通过进度条表示，绿色良好，红色失败，结果直观。
+		5） 可自动多次运行，并提供执行的测试结果和反馈
+	3> 单元测试用例：一部分代码可以确保另一端代码按预期工作。
+	4> 结合工具
+		1） eclipse
+		2） ant打包工具
+		3） maven项目构建管理

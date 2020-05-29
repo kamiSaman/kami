@@ -17,8 +17,10 @@ webservice是个概念，不是具体的技术，就想ajax一样，有很多框
    
 
 
-
-
+生成服务端代码：
+wsdl2java -uri g:\UserService.wsdl -p com.zzt.ws -d adb -s -ss -sd -ssi -o g:\zzt\server
+生成
+wsdl2java -uri g:\UserService.wsdl -p com.zzt.ws -d adb -s -o g:\zzt\client
 
 
 客户端：
@@ -37,15 +39,15 @@ webservice是个概念，不是具体的技术，就想ajax一样，有很多框
    wsimport -s C:\tmp -verbose http://localhost:7002/WebServiceTest/services/HelloServices?wsdl
 2、通过Axis2生成：
    1>下载axis2：http://www.apache.org/dyn/closer.lua/axis/axis2/java/core/1.7.9/axis2-1.7.9-bin.zip
-   2>  wsdl2java -uri .\WSDL\CCAInjectActualBillingService.wsdl -p CCAInjectActualBillingService -o ngncca 
+   2>  wsdl2java -uri .\mcc_MccContentBuyIdInfoReference.wsdl.wsdl -p /soap/jp/co/ntt/www/cif -o /soap/jp/co/ntt/www/cif 
        wsdl2java -uri http://localhost:7002/WebServiceTest/services/HelloServices?wsdl -p clientHelloService -o newClient  
-	 uri——服务端wsdl文件保存的位置;
+	 uri——wsdl文件路径;
 	 -p——指定了生成的Java类的包名 ;
 	 -o——指定了生成的一系列文件保存的根目录 ;
 3.通过eclipse生成：文件右键webService
 
 
-
+wsdl2java -uri .\mcc_MccContentBuyIdInfoReference.wsdl -p mcc_MccContentBuyIdInfoReference -o /soap/jp/co/ntt/www/cif
 
    
    

@@ -1,0 +1,173 @@
+资料：
+	1> 官网：https://spring.io/
+	2> 通用配置参数：https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+	3> Spring下所有项目的文档:https://spring.io/docs/reference
+	4> 按场景给出的一些重要示例:https://spring.io/guides
+	5> spring-boot-samples项目github地址:https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples
+	6> 下面是一些完整的项目, 可以参考其设计思路:
+		https://github.com/kazuki43zoo/mybatis-spring-boot-jpetstore
+		https://github.com/shuzheng/zheng
+		https://gitee.com/xiandafu/springboot-plus
+
+1、eclipse集成spring插件
+	1> 下载插件zip包,http://download.springsource.com/release/TOOLS/update/3.9.7.RELEASE/e4.10/springsource-tool-suite-3.9.7.RELEASE-e4.10.0-updatesite.zip
+	2> Eclipse ： Help--> Install New SoftWare--> 选择Add--> 自命名--> Archive--> 选择刚刚下载的包
+	
+2、创建项目3种方式
+	1> 新建maven项目，添加springboot依赖，不推荐
+	2> 安装spring插件
+	3>　官网下载项目模板，下载地址：https://start.spring.io/
+	
+3、启动前准备
+	1> mvn clean 	： 清理项目的target目录,清理依赖jar包，执行后maven需重新加载依赖项
+    2> mvn compile 	： 编译项目
+	3> mvn test 	： 编译项目后，再执行Junit测试方法
+    4> mvn package 	： 编译项目后，再执行Junit测试方法，再把项目打包到target目录
+    5> mvn install 	： 编译项目后，再执行Junit测试方法，再把项目打包到target目录，再安装到本地仓库
+
+4、springBoot默认目录
+	/src/main/java		：执行代码
+	/src/main/resource	：配置文件路径
+		--static	   	：存放静态文件，比如 css、js、image, （访问方式 http://localhost：8080/js/main.js）
+		--templates		：存放静态页面jsp,html,tpl
+		--config		：存放配置文件,application.properties
+	/src/test/java		：测试程序
+	
+	※ Spring Boot默认会挨个从resources > resources > static > public里面找是否存在相应的资源，如果有则直接返回
+	※ /resource/text文件默认是访问不了的.application.properties配置如下可访问：spring.resources.static-locations=classpath:/static/,classpath:/test/
+
+5、常用配置文件
+	1> 全局的配置文件application.properties
+		-file:./config/ 、 -file:./ 、 -calsspath:/config/ 、 -classpath:/优先级从高到低，高优先级的相同配置项会覆盖低优先级的相同配置项
+
+6、常用注解
+	@SpringBootApplication	：包含@Configuration、@EnableAutoConfiguration、@ComponentScan通常用在主类上。
+	@Configuration			：指出该类是 Bean 配置的信息源，相当于XML中的<beans></beans>，一般加在主类上。
+	@EnableAutoConfiguration：让Spring Boot根据应用所声明的依赖来对Spring框架进行自动配置，一般加在主类上。
+	@ComponentScan			：组件扫描。个人理解相当于<context：component-scan>，自动扫描注册@Component @Controller @Service等这些注解的类，把这些类注册为bean。
+	@Component				：泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。
+	@Controller				：用于标注控制层组件
+	@Service				：用于标注业务层组件。 
+	@Repository				：用于标注数据访问组件，即DAO组件。
+	@Bean					：相当于XML中的<bean></bean>,放在方法的上面，而不是类，意思是产生一个bean,并交给spring管理。
+	@AutoWired				：byType方式。把配置好的Bean拿来用，完成属性、方法的组装，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。当加上（required=false）时，就算找不到bean也不报错。
+	@RestController			：用于标注控制层组件(如struts中的action)，包含@Controller和@ResponseBody。
+	@ResponseBody			：表示该方法的返回结果直接写入HTTP response body中一般在异步获取数据时使用，在使用@RequestMapping后，返回值通常解析为跳转路径，
+							 加上@responsebody后返回结果不会被解析为跳转路径，而是直接写入HTTP response body中。
+							 比如异步获取json数据，加上@responsebody后，会直接返回json数据。
+	@PropertySource			：自动加载指定路径的配置文件信息
+	@ImportResource			：Spring Boot里面没有Spring的配置文件，我们自己编写的配置文件，也不能自动识别；想让Spring的配置文件生效，加载进来；@ImportResource标注在一个配置类上.
+	@ServletComponentScan	：在SpringBootApplication上使用@ServletComponentScan注解后，Servlet、Filter、Listener可以直接通过@WebServlet、@WebFilter、@WebListener注解自动注册
+	@Controller				：视图解析器可以解析return 的jsp,html页面，并且跳转到相应页面
+	@MapperScan				：扫描某路径下所有mapper,配置支持多个路径，但路径必须为最低级包，间隔路径无法生效
+
+
+
+	@Qualifier：当有多个同一类型的Bean时，可以用@Qualifier("name")来指定。与@Autowired配合使用
+
+	@Resource(name="name",type="type")：没有括号内内容的话，默认byName。与@Autowired干类似的事。
+
+ 
+
+	@RequestMapping：
+
+	RequestMapping是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。
+	该注解有六个属性：
+	params：指定request中必须包含某些参数值是，才让该方法处理。
+	headers：指定request中必须包含某些指定的header值，才能让该方法处理请求。
+	value：指定请求的实际地址，指定的地址可以是URI Template 模式
+	method：指定请求的method类型， GET、POST、PUT、DELETE等
+	consumes：指定处理请求的提交内容类型（Content-Type），如application/json,text/html;
+	produces：指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回
+
+	@RequestParam：
+	用在方法的参数前面。
+	@RequestParam String a =request.getParameter("a")。
+
+	@PathVariable：
+
+	路径变量。参数与大括号里的名字一样要相同。
+
+
+
+
+
+8、部署到JavaEE容器
+	1> 修改启动类，继承 SpringBootServletInitializer 并重写 configure 方法
+		public class SpringBootSampleApplication extends SpringBootServletInitializer{
+
+			private static final Logger logger = LoggerFactory.getLogger(SpringBootSampleApplication.class);
+
+			@Override
+			protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+				return builder.sources(this.getClass());
+			}
+
+		}
+	2> 修改pom文件中jar 为 war
+		<!-- <packaging>jar</packaging> -->
+		<packaging>war</packaging>
+	3> 修改pom，排除tomcat插件
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-tomcat</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+	4> 打包部署到容器 
+		使用命令 mvn clean package 打包后，同一般J2EE项目一样部署到web容器。
+
+
+9、常见问题
+	1> Spring Boot集成Mybatis显示sql日志 ： application.properties文件中配置对应mapper所在包的日志级别：
+		logging.level.com.secbro.mapper=debug
+	
+	2> 环境切换
+		 应用启动切换
+		1) 生成application-dev.properties，application-qa.properties，application-pro.properties
+		2） 启动时追加 --spring.profiles.active=dev(java -jar C:\Users\860119012\Desktop\pro\demo_springbot-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev)
+
+		 Maven控制打包时切换:
+		1)  
+	3> 打包成部署的war包
+		1) 让SpringbootApplication 类继承 SpringBootServletInitializer 并重写 configure 方法，如下：
+			@SpringBootApplication
+			public class SpringbootApplication extends SpringBootServletInitializer {
+				@Override
+				protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+					return application.sources(SpringbootApplication.class);
+				}
+
+				public static void main(String[] args) {
+					SpringApplication.run(SpringbootApplication.class, args);
+				}
+			}
+		2) 修改pom.xml文件，将jar改成war，如下
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

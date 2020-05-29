@@ -1,0 +1,93 @@
+0、资料
+	带界面版的mybatis geneator，https://github.com/astarring/mybatis-generator-gui
+	
+1、MyBatis Generator安装使用
+	1> Eclipse中的安装
+		1.下载插件
+		2.将插件generator的features和plugins里的东西都拷贝到eclipse的文件夹features和plugins下。
+		3.重启eclipse，验证是否安装成功。
+	2> Eclipse中的使用
+		1.新建一个generatorConfig.xml文件
+		2.generatorConfig.xml文件的配置
+
+	3> generatorConfig.xml文件的配置
+		jdbcConnection			---数据库链接URL、用户名、密码
+		javaModelGenerator		---生成模型的包名和位置，就是mybatis 里面用的一些entity 类的存放路径配置
+		sqlMapGenerator 		---生成的映射文件报名和位置，就是对应mybatis 的写sql 语句的xml文件的存放路径配置
+		javaClientGenerator		---生成DAO的包名和位置，就是mybatis 里面dao 接口的存放路径
+		table					---这个配置项是配置在项目中操作的数据库表
+
+	4> 执行：
+		Run As -> Run MyBatis Generator
+
+2、小技巧
+	a)建表时，字段名称建议用"_"分隔多个单词，比如:AWB_NO、REC_ID...，这样生成的entity，属性名称就会变成漂亮的驼峰命名，即：awbNo、recId
+	b)oracle中，数值形的字段，如果指定精度，比如Number(12,2)，默认生成entity属性是BigDecimal型 ，如果不指定精度，比如:Number(9)，指默认生成的是Long型
+	c)oracle中的nvarchar/nvarchar2，mybatis-generator会识别成Object型，建议不要用nvarchar2，改用varchar2	
+	
+3、springboot集成mybatis
+	1> 带xml方式
+		1） 引入jar包：<artifactId>mybatis-spring-boot-starter</artifactId>
+		2） application.properties
+			mybatis.config-location=classpath:mybatis/mybatis-config.xml
+			mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
+		3） 添加User的映射文件*.xml
+		4） 在启动类中添加对mapper包扫描@MapperScan
+	2> 纯注释
+		1） 引入jar包：<artifactId>mybatis-spring-boot-starter</artifactId>
+		2） application.properties
+			mybatis.config-location=classpath:mybatis/mybatis-config.xml
+			mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
+		3） mapper接口文件中添加@select注释
+			@Select("SELECT * FROM users")
+			@Results({
+				@Result(property = "userSex",  column = "user_sex", javaType = UserSexEnum.class),
+				@Result(property = "nickName", column = "nick_name")
+			})
+		4） 在启动类中添加对mapper包扫描@MapperScan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

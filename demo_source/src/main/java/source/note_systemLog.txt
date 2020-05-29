@@ -1,16 +1,13 @@
 1、java日志组件的类别
 	1> 中间组件：
-		1) SLF4J			：日志门面，与common类似，本身并无日志的实现，logback是其天然实现，SLF4J支持参数化
-		2) Commons Logging	:是一套Java日志接口,让应用不再依赖具体的日志工具，自动匹配日志工具，动态绑定，（简称JCL）
+		1) SLF4J			：日志门面，与common类似，本身并无日志的实现，logback是其天然实现，SLF4J支持参数化，可使用占位符功能,减少临时字符串的使用，提高应用性能和效率
+		2) Commons Logging	:是一套Java日志接口，自动匹配日志工具，动态绑定，（简称JCL），其内部也提供一个Simple Log的简单实现
 	2> 日志实现组件
 		1） JUL		:自Java1.4以来的官方日志实现
 		2） LogKit	：高速日志记录工具集，可将日志存入数据库可以记录很多项内容,
 		3） Logback	:一个“可靠、通用、快速而又灵活的Java日志框架”,log4j的改良版
 		4） log4j	：apach,开源,可控制输出源，可控制日志格式
 		5） Log4j2	:log4j 1.x和logback的改进版,采用新技术（无锁异步等等）,日志的吞吐量、性能提升10倍，解决死锁bug，配置更灵活
-
-
-
 
 1、使用流程
 	1> 导入log4j-1.2.17.jar包
@@ -25,7 +22,7 @@
 	1> 三大组件：Loggers(记录器)、Appenders (输出源)、Layouts(布局)
 	2> 记录器：用于设置日志级别：FATAL > ERROR > WARN > INFO > DEBUG  （OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL）
 	3> 输出源：日志打印位置，输出源常用类
-		1) 控制台		：org.apache.log4j.ConsoleAppender
+		1) 控制台	：org.apache.log4j.ConsoleAppender
 		2) 一般文件	：org.apache.log4j.FileAppender
 		3) 日期日志	：org.apache.log4j.DailyRollingFileAppender
 		4) 滚动日志	：org.apache.log4j.RollingFileAppender
@@ -168,13 +165,66 @@
 		2) <configuration>scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟
 		3) <configuration>debug	 	：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false
 		4)
-		
-		
     6>
     7>
+14、log4j多重情况案例：
+	1> 首先创建一张表
+		create table log4j
+		(
+			logId int not null auto_increment,--流水号
+			createDate varchar(45) default null,--日志生成时间
+			thread varchar(45) default null,--当前线程
+			level varchar(45) default null,--当前日志的级别
+			class varchar(45) default null,--生成日志的类
+			message varchar(245) default null,--日志具体信息
+			
+			primary key(logId)
+		)
+	2>编写配置文件myLog4j.properties
+		#定义3个输出端
+		log4j.rootCategory=INFO,A1,A2,A3
 
+		#定义A1输出到控制器
+		log4j.appender.A1=org.apache.log4j.ConsoleAppender
+		#定义A1的布局模式为PaternLayout
+		log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+		# 定义A1的输出格式
+		log4j.appender.A1.layout.ConversionPattern=%4p [%t] (%F:%L) - %m%n
 
+		#定义A2输出到文件
+		log4j.appender.A2=org.apache.log4j.RollingFileAppender
+		#定义A2输出到哪个文件
+		log4j.appender.A2.File=./Sample.log
+		#定义A2输出文件的最大长度
+		log4j.appender.A2.MaxFileSize = 1KB
+		#定义A2的备份文件数
+		log4j.appender.A2.MaxBackupIndex = 3
+		#定义A2的布局模式为PatternLayout
+		log4j.appender.A2.layout=org.apache.log4j.PatternLayout
+		#定义A2的输出模式
+		log4j.appender.A2.layout.ConversionPattern=%d{yyyy-MM-dd hh:mm:ss}:%p %t %c - %m%n
 
+		#定义A3输出到数据库
+		log4j.appender.A3=org.apache.log4j.jdbc.JDBCAppender
+		log4j.appender.A3.URL=jdbc:mysql://localhost:3306/study
+		log4j.appender.A3.driver=com.mysql.jdbc.Driver
+		log4j.appender.A3.user=root
+		log4j.appender.A3.password=root
+		#定义A3的布局和执行的SQL语句
+		log4j.appender.A3.layout=org.apache.log4j.PatternLayout
+		log4j.appender.A3.layout.ConversionPattern=INSERT INTO log4j(createDate,thread,level,class,message) values(\'%d\',\'%t\',\'%-5p\',\'%c\',\'%m\')
+	3>最后测试程序如下：
+		public static void sample()
+		{
+			Logger logger = Logger.getLogger(Log4jTest.class);
+			
+			PropertyConfigurator.configure("myLog4j.properties");
+			logger.debug("Here is DEBUG messgae");
+			logger.info("Here is INFO message");
+			logger.warn("Here is WARN message");
+			logger.error("Here is ERROR message");
+			logger.fatal("Here is FATAL message");
+		}
 
 
 
