@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器 -->        
+<generatorConfiguration>
+	<!--
+	context:生成一组对象的环境 
+    id:必选，上下文id，用于在生成错误时提示
+    defaultModelType:指定生成对象的样式
+   	特别说明 我的前面三个都不管用,不知道为啥
+        1，conditional：类似hierarchical；
+        2，flat：所有内容（主键，blob）等全部生成在一个对象中；
+        3，hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+    targetRuntime:
+        1，MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+        2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+    introspectedColumnImpl：类全限定名，用于扩展MBG
+	-->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+    	<!-- 生成的Java文件的编码格式 -->
+    	<property name="javaFileEncoding" value="UTF-8"/>
+    
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mynavi?serverTimezone=UTC" userId="root" password="root"/>
+
+        <javaTypeResolver>
+        	<!-- true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型	false：默认 -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        
+        <!--javaModelGenerator：模板文件entity targetPackage:java目录下路径	targetProject：项目名-->
+        <javaModelGenerator targetPackage="com.kami.web.entity"	targetProject="demo_springbot">
+        	<!-- true：自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter； -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        
+		<!--sqlMapGenerator：数据库映射文件mapper.xml targetPackage:java目录下路径	targetProject：项目名-->
+        <sqlMapGenerator targetPackage="com.kami.web.entity" targetProject="demo_springbot">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        
+		<!--javaClientGenerator：持久层接口mapper targetPackage:java目录下路径	targetProject：项目名		type:映射文件类型-->
+        <javaClientGenerator targetPackage="com.kami.web.mapper" targetProject="demo_springbot" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+        
+        
+        <!--生成对应表及类名-->
+       	<!-- enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）； -->
+        <table tableName="userdetails" domainObjectName="UserDetails" 
+        	enableCountByExample="false" enableUpdateByExample="false" 
+        	enableDeleteByExample="false" enableSelectByExample="false" 
+        	selectByExampleQueryId="false" />
+        	
+        <!--生成对应表及类名-->
+       	<!-- enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）； -->
+        <table tableName="userposition" domainObjectName="UserPosition" 
+        	enableCountByExample="false" enableUpdateByExample="false" 
+        	enableDeleteByExample="false" enableSelectByExample="false" 
+        	selectByExampleQueryId="false" />	
+    </context>
+    
+</generatorConfiguration>
